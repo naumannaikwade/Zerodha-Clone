@@ -20,7 +20,7 @@ const app = express();
 
 // Middleware
 app.use(cors({
-  origin: ["http://localhost:3000", "http://localhost:3001"], // frontend URLs
+  origin: ["http://localhost:3000", "http://localhost:3001","https://zerodha-clone-dashboard-80c8.onrender.com"], // frontend URLs
   credentials: true,
 }));
 
