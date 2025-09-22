@@ -28,7 +28,7 @@ const useFundsStore = create((set, get) => ({
   addDemoFunds: async () => {
     set({ loading: true, error: null });
     try {
-      const res = await axios.post(`${API_URL}/add-demo`, {}, { withCredentials: true });
+      const res = await axios.post(`${API_URL}/api/funds/add-demo`, {}, { withCredentials: true });
       set({ funds: res.data.funds, transactions: res.data.funds.transactions, loading: false });
       return { success: true, message: "Demo funds added successfully" };
     } catch (err) {
