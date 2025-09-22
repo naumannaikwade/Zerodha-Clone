@@ -1,8 +1,8 @@
-// dashboard/src/store/useAuthStore.js
+// src/store/useAuthStore.js
 import { create } from "zustand";
 import axios from "axios";
 
-const API_URL = process.env.REACT_APP_API_URL;
+const API_URL = "https://zerodha-clone-5t7q.onrender.com";
 
 const useAuthStore = create((set) => ({
   user: null,
@@ -10,6 +10,7 @@ const useAuthStore = create((set) => ({
   loading: false,
   error: null,
 
+  // ------------------- SIGNUP -------------------
   signup: async (data) => {
     set({ loading: true, error: null });
     try {
@@ -25,6 +26,7 @@ const useAuthStore = create((set) => ({
     }
   },
 
+  // ------------------- LOGIN -------------------
   login: async (form) => {
     set({ loading: true, error: null });
     try {
@@ -37,19 +39,22 @@ const useAuthStore = create((set) => ({
     }
   },
 
+  // ------------------- AUTO-LOGIN -------------------
   autoLogin: async () => {
     try {
-      const res = await axios.get(`${API_URL}/api/auth/session`, { withCredentials: true });
-      if (res.data?.user) {
+      const res = await axios.get(`${API_URL}/api/auth/home`, { withCredentials: true });
+      if (res.data?.success && res.data.user) {
         set({ user: res.data.user, isAuthenticated: true });
         return { success: true };
       }
       return { success: false };
-    } catch {
+    } catch (err) {
+      console.error("Auto-login error:", err);
       return { success: false };
     }
   },
 
+  // ------------------- LOGOUT -------------------
   logout: async () => {
     try {
       await axios.post(`${API_URL}/api/auth/logout`, {}, { withCredentials: true });
@@ -59,6 +64,7 @@ const useAuthStore = create((set) => ({
     }
   },
 
+  // ------------------- CLEAR ERROR -------------------
   clearError: () => set({ error: null }),
 }));
 
