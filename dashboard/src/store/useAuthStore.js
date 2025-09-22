@@ -27,11 +27,12 @@ const useAuthStore = create((set) => ({
   },
 
   // ------------------- LOGIN -------------------
-  login: async (form) => {
+  // LOGIN
+login: async (form) => {
   set({ loading: true, error: null });
   try {
-    const res = await axios.post("http://localhost:5000/api/auth/login", form, { withCredentials: true });
-    set({ loading: false, isAuthenticated: true });
+    const res = await axios.post(`${API_URL}/api/auth/login`, form, { withCredentials: true });
+    set({ loading: false, user: res.data.user, isAuthenticated: true });
     return { success: true, user: res.data.user };
   } catch (err) {
     set({ loading: false, error: err.response?.data?.message || "Login failed" });
