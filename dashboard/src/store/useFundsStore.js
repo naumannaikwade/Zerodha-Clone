@@ -2,7 +2,7 @@
 import { create } from "zustand";
 import axios from "axios";
 
-const API_URL = "http://localhost:5000/api/funds"; // backend URL
+const API_URL = "https://zerodha-clone-5t7q.onrender.com"; // backend URL
 
 const useFundsStore = create((set, get) => ({
   funds: { equity: 0, commodity: 0, currency: 0 },
