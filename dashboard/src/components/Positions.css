@@ -1,0 +1,249 @@
+/* ---------------- Base ---------------- */
+.positions-bg {
+  background-color: #ffffff;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.positions-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.positions-card {
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  padding: 24px;
+}
+
+/* ---------------- Header ---------------- */
+.positions-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+  flex-wrap: wrap; /* Helps stacking on small screens */
+}
+
+.positions-header h2 {
+  margin: 0 0 8px 0;
+  font-size: 24px;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.positions-tagline {
+  color: #6b7280;
+  font-size: 14px;
+  margin: 0 0 8px 0;
+}
+
+.positions-summary-info {
+  display: flex;
+  gap: 16px;
+  font-size: 12px;
+  color: #6b7280;
+  flex-wrap: wrap;
+}
+
+.positions-summary-info span {
+  background: #f3f4f6;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+/* ---------------- Table ---------------- */
+.positions-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 24px;
+}
+
+.positions-table th {
+  background: #f8f9fa;
+  padding: 12px 16px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 14px;
+  color: #374151;
+  border-bottom: 1px solid #e5e7eb;
+  white-space: nowrap;
+}
+
+.positions-table td {
+  padding: 12px 16px;
+  font-size: 14px;
+  color: #374151;
+  border-bottom: 1px solid #f3f4f6;
+  white-space: nowrap;
+}
+
+.positions-name {
+  color: #475569;
+  max-width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ---------------- Type Pill ---------------- */
+.positions-type-pill {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.positions-type-pill.long {
+  background: #f0fdf4;
+  color: #16a34a;
+  border: 1px solid #bbf7d0;
+}
+
+.positions-type-pill.short {
+  background: #fef2f2;
+  color: #dc2626;
+  border: 1px solid #fecaca;
+}
+
+/* ---------------- PnL ---------------- */
+.positions-pnl-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.positions-pnl-amount {
+  font-weight: 500;
+}
+
+.positions-pnl-percent {
+  font-size: 12px;
+}
+
+.positions-pnl-amount.positive,
+.positions-pnl-percent.positive {
+  color: #16a34a;
+}
+
+.positions-pnl-amount.negative,
+.positions-pnl-percent.negative {
+  color: #dc2626;
+}
+
+/* ---------------- Summary Row ---------------- */
+.positions-summary-row {
+  background: #f8f9fa;
+  font-weight: 600;
+}
+
+.positions-summary-row td {
+  border-bottom: none;
+}
+
+/* ---------------- Responsive ---------------- */
+@media (max-width: 768px) {
+  .positions-card {
+    padding: 16px;
+  }
+
+  .positions-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .positions-header h2 {
+    font-size: 20px;
+  }
+
+  .positions-tagline {
+    font-size: 13px;
+  }
+
+  .positions-summary-info {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .positions-summary-info span {
+    font-size: 12px;
+    padding: 3px 6px;
+  }
+
+  .positions-table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .positions-table th,
+  .positions-table td {
+    font-size: 13px;
+    padding: 10px 12px;
+  }
+
+  .positions-name {
+    max-width: 120px;
+  }
+}
+
+@media (max-width: 480px) {
+  .positions-header h2 {
+    font-size: 18px;
+  }
+
+  .positions-card {
+    padding: 12px;
+  }
+
+  .positions-table th,
+  .positions-table td {
+    font-size: 12px;
+    padding: 8px 10px;
+  }
+
+  .positions-name {
+    max-width: 100px;
+  }
+}
+
+/* ---------------- Tablet Fix (769px - 1024px) ---------------- */
+@media (max-width: 1024px) {
+  .positions-table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .positions-table th,
+  .positions-table td {
+    font-size: 13px;
+    padding: 10px 12px;
+  }
+
+  .positions-name {
+    max-width: 150px;
+  }
+}
+
+/* ---------------- Large Tablet Fix (below 1095px) ---------------- */
+@media (max-width: 1095px) {
+  .positions-table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .positions-table th,
+  .positions-table td {
+    font-size: 14px; /* keep readable at this size */
+    padding: 10px 14px;
+  }
+
+  .positions-name {
+    max-width: 160px;
+  }
+}

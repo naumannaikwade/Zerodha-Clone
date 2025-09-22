@@ -1,0 +1,54 @@
+.dashboard-container {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Left Sidebar - Watchlist */
+.sidebar {
+  width: 30%;
+  min-width: 250px;
+  border-right: 1px solid #ccc;
+  overflow-y: auto;
+  background-color: #f8f9fa;
+}
+
+/* Right Main Content - Operations */
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  overflow-y: auto;
+}
+
+/* ---------------- Responsive ---------------- */
+@media (max-width: 1024px) {
+  .sidebar {
+    width: 35%;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-container {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #ccc;
+    max-height: 40vh;
+  }
+
+  .main-content {
+    flex: 1;
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebar {
+    max-height: 35vh;
+  }
+}

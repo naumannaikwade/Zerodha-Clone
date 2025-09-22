@@ -1,0 +1,294 @@
+/* Dashboard.css - Minimal Styling */
+.dashboard-bg {
+  background-color: #ffffff;
+  min-height: 100vh;
+  padding: 0px 20px;
+}
+
+.dashboard-container {
+  min-width: 100%;
+  margin: 0px 0px;
+  width: 100%;
+}
+
+.dashboard-header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid #e0e0e0;
+  margin-bottom: 20px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dashboard-header h2 {
+  font-size: 1.8rem;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.dashboard-header p {
+  font-size: 1rem;
+  color: #555;
+  margin: 0;
+}
+
+.index-item {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.index-name {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.index-value {
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.index-change {
+  font-size: 13px;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.positive {
+  color: #16a34a;
+}
+
+.negative {
+  color: #dc2626;
+}
+
+.dashboard-content {
+  display: flex;
+  gap: 24px;
+}
+
+.dashboard-left {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  
+}
+
+.dashboard-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.dashboard-card {
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  padding: 0;
+  
+}
+
+.card-header {
+  padding: 16px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.card-header h2 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #212121;
+}
+
+.card-tagline {
+  margin: 4px 0 0;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.portfolio-summary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  padding: 16px;
+  width: 25rem;
+  height: 8rem;
+}
+
+.summary-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.summary-label {
+  font-size: 12px;
+  color: #6b7280;
+  margin-bottom: 4px;
+}
+
+.summary-value {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.actions-container {
+  display: flex;
+  gap: 12px;
+  padding: 16px;
+  width: 25rem;
+}
+
+.action-btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  flex: 1;
+}
+
+.action-btn.buy {
+  background-color: #ecfdf5;
+  color: #059669;
+}
+
+.action-btn.sell {
+  background-color: #fee2e2;
+  color: #dc2626;
+}
+
+.action-btn.funds {
+  background-color: #dbeafe;
+  color: #2563eb;
+}
+
+.dashboard-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.dashboard-table th {
+  padding: 12px 16px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 12px;
+  color: #374151;
+  background: #f8f9fa;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.dashboard-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.order-type, .order-status {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.order-type.buy {
+  background-color: #ecfdf5;
+  color: #059669;
+}
+
+.order-type.sell {
+  background-color: #fee2e2;
+  color: #dc2626;
+}
+
+.order-status.completed {
+  background-color: #ecfdf5;
+  color: #059669;
+}
+
+.order-status.pending {
+  background-color: #fef3c7;
+  color: #d97706;
+}
+
+.dashboard-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  color: #6b7280;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1024px) {
+  .dashboard-content {
+    flex-direction: column;
+  }
+  
+  .portfolio-summary {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  .actions-container {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 768px) {
+  .portfolio-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .dashboard-header p {
+    font-size: 0.95rem;
+  }
+
+  .action-btn {
+    font-size: 13px;
+    padding: 6px 12px;
+  }
+
+  .dashboard-table th,
+  .dashboard-table td {
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-bg {
+    padding: 16px;
+  }
+
+  .dashboard-header h2 {
+    font-size: 1.3rem;
+  }
+
+  .dashboard-header p {
+    font-size: 0.85rem;
+  }
+
+  .action-btn {
+    font-size: 12px;
+    padding: 5px 10px;
+  }
+
+  .dashboard-table th,
+  .dashboard-table td {
+    padding: 6px 8px;
+    font-size: 11px;
+  }
+
+  .dashboard-content {
+    gap: 12px;
+  }
+}
