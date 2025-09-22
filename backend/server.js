@@ -1,3 +1,4 @@
+// backend/server.js
 const express = require("express");
 const dotenv = require("dotenv");
 const cors = require("cors");
@@ -9,9 +10,8 @@ const authRoutes = require("./routes/authRoutes");
 const fundsRoutes = require("./routes/funds");
 const ordersRoutes = require("./routes/orders");
 const holdingsRoutes = require("./routes/holdings");
-const positionsRoutes  = require("./routes/positions");
+const positionsRoutes = require("./routes/positions");
 const errorLogger = require("./middleware/errorLogger");
-
 
 dotenv.config();
 connectDB();
@@ -19,14 +19,15 @@ connectDB();
 const app = express();
 
 // Middleware
+app.use(express.json());
+
+// ✅ CORS for frontend + credentials
 app.use(cors({
-  origin: "https://zerodha-clone-dashboard-80c8.onrender.com", // frontend URLs
+  origin: process.env.FRONTEND_URL, // e.g., https://zerodha-clone-5t7q.onrender.com
   credentials: true,
 }));
 
-app.use(express.json());
-
-// Session setup
+// ✅ Session setup for cross-domain cookies
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
@@ -38,8 +39,8 @@ app.use(
     cookie: {
       maxAge: 1000 * 60 * 60 * 24, // 1 day
       httpOnly: true,
-      secure: true,        // must be true for HTTPS
-      sameSite: "none",    // allows cross-domain cookies
+      secure: true,       // must be true on HTTPS
+      sameSite: "none",   // allow cross-domain
     },
   })
 );
@@ -47,7 +48,7 @@ app.use(
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/funds", fundsRoutes);
-app.use('/api/orders', ordersRoutes);
+app.use("/api/orders", ordersRoutes);
 app.use("/api/holdings", holdingsRoutes);
 app.use("/api/positions", positionsRoutes);
 
@@ -56,14 +57,15 @@ app.get("/api/health", (req, res) => {
   res.json({ status: "OK", message: "Backend is running" });
 });
 
+// Error handler
 app.use(errorLogger);
 app.use((err, req, res, next) => {
-  res.status(500).json({ 
-    success: false, 
+  res.status(500).json({
+    success: false,
     message: "Something went wrong!",
     error: process.env.NODE_ENV === 'development' ? err.message : undefined
   });
 });
 
-const PORT = process.env.PORT || 3002;
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
