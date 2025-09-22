@@ -20,7 +20,7 @@ const app = express();
 
 // Middleware
 app.use(cors({
-  origin: ["https://zerodha-clone-dashboard-80c8.onrender.com"], // frontend URLs
+  origin: "https://zerodha-clone-dashboard-80c8.onrender.com", // frontend URLs
   credentials: true,
 }));
 
