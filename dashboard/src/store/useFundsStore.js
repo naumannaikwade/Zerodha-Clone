@@ -14,7 +14,7 @@ const useFundsStore = create((set, get) => ({
   fetchFunds: async () => {
     set({ loading: true, error: null });
     try {
-      const res = await axios.get(API_URL, { withCredentials: true });
+     const res = await axios.get(`${API_URL}/api/funds`, { withCredentials: true });
       set({ funds: res.data, transactions: res.data.transactions || [], loading: false });
     } catch (err) {
       set({
