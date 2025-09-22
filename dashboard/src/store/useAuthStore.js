@@ -14,7 +14,7 @@ const useAuthStore = create((set) => ({
   signup: async (data) => {
     set({ loading: true, error: null });
     try {
-      const res = await axios.post(`${API_URL}/signup`, data, { withCredentials: true }); // ✅ send cookies
+      const res = await axios.post(`${API_URL}/api/auth/signup`, data, { withCredentials: true });
       set({ user: res.data.user, isAuthenticated: true });
       return { success: true, user: res.data.user };
     } catch (err) {
