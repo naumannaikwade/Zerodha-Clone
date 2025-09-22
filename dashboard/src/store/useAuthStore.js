@@ -1,8 +1,8 @@
-// src/store/useAuthStore.js
+// dashboard/src/store/useAuthStore.js
 import { create } from "zustand";
 import axios from "axios";
 
-const API_URL = "https://zerodha-clone-5t7q.onrender.com";
+const API_URL = process.env.REACT_APP_API_URL;
 
 const useAuthStore = create((set) => ({
   user: null,
@@ -10,7 +10,6 @@ const useAuthStore = create((set) => ({
   loading: false,
   error: null,
 
-  // ------------------- SIGNUP -------------------
   signup: async (data) => {
     set({ loading: true, error: null });
     try {
@@ -26,24 +25,21 @@ const useAuthStore = create((set) => ({
     }
   },
 
-  // ------------------- LOGIN -------------------
-  // LOGIN
-login: async (form) => {
-  set({ loading: true, error: null });
-  try {
-    const res = await axios.post(`${API_URL}/api/auth/login`, form, { withCredentials: true });
-    set({ loading: false, user: res.data.user, isAuthenticated: true });
-    return { success: true, user: res.data.user };
-  } catch (err) {
-    set({ loading: false, error: err.response?.data?.message || "Login failed" });
-    return { success: false };
-  }
-},
+  login: async (form) => {
+    set({ loading: true, error: null });
+    try {
+      const res = await axios.post(`${API_URL}/api/auth/login`, form, { withCredentials: true });
+      set({ loading: false, user: res.data.user, isAuthenticated: true });
+      return { success: true, user: res.data.user };
+    } catch (err) {
+      set({ loading: false, error: err.response?.data?.message || "Login failed" });
+      return { success: false };
+    }
+  },
 
-  // ------------------- AUTO-LOGIN / CHECK SESSION -------------------
   autoLogin: async () => {
     try {
-      const res = await axios.get(`${API_URL}/home`, { withCredentials: true }); // ✅ backend checks session
+      const res = await axios.get(`${API_URL}/api/auth/session`, { withCredentials: true });
       if (res.data?.user) {
         set({ user: res.data.user, isAuthenticated: true });
         return { success: true };
@@ -54,17 +50,15 @@ login: async (form) => {
     }
   },
 
-  // ------------------- LOGOUT -------------------
   logout: async () => {
     try {
-      await axios.post(`${API_URL}/logout`, {}, { withCredentials: true }); // ✅ clears session
+      await axios.post(`${API_URL}/api/auth/logout`, {}, { withCredentials: true });
       set({ user: null, isAuthenticated: false });
     } catch (err) {
       console.error("Logout failed", err);
     }
   },
 
-  // ------------------- CLEAR ERROR -------------------
   clearError: () => set({ error: null }),
 }));
 
