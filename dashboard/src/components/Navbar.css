@@ -1,0 +1,236 @@
+/* ---------------- Navbar Container ---------------- */
+.navbar {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  border-bottom: 1px solid #e5e5e5;
+  background-color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 0;
+  font-family: "Inter", sans-serif;
+}
+
+/* ---------------- Left: Logo ---------------- */
+.navbar-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.navbar-logo img {
+  width: 32px;
+  height: 32px;
+}
+
+.menu-text {
+  font-size: 14px;
+  font-weight: 500;
+  color: #444;
+}
+
+/* ---------------- Center: Links ---------------- */
+.navbar-links {
+  display: flex;
+  gap: 20px;
+}
+
+.navbar-links a {
+  text-decoration: none;
+  font-size: 14px;
+  color: #444;
+  font-weight: 500;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.navbar-links a:hover {
+  color: #0056d2;
+  background-color: #f0f4ff;
+}
+
+.navbar-links a.active {
+  color: #0056d2;
+  font-weight: 600;
+  background-color: #eef3ff;
+}
+
+/* ---------------- Right: User Info ---------------- */
+.navbar-user {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.navbar-user span {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+}
+
+.navbar-user button {
+  background: #0056d2;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.navbar-user button:hover {
+  background: #0040a8;
+}
+
+/* ---------------- Sidebar ---------------- */
+.sidebar-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.45);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 999;
+}
+
+.sidebar-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.sidebar-nav {
+  position: fixed;
+  top: 0;
+  left: -280px;
+  width: 260px;
+  height: 100%;
+  background: #fff;
+  box-shadow: 2px 0 12px rgba(0, 0, 0, 0.1);
+  transition: left 0.3s ease;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-nav.active {
+  left: 0;
+}
+
+.sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 20px;
+  border-bottom: 1px solid #e5e5e5;
+  background-color: #fafafa;
+}
+
+.sidebar-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sidebar-user-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.sidebar-user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-username {
+  font-weight: 600;
+  font-size: 14px;
+  color: #333;
+}
+
+.sidebar-user-email {
+  font-size: 12px;
+  color: #777;
+}
+
+.sidebar-close {
+  background: none;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+  color: #777;
+}
+
+/* ---------------- Sidebar Links ---------------- */
+.sidebar-links {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 16px 0;
+}
+
+.sidebar-links a {
+  padding: 14px 20px;
+  text-decoration: none;
+  color: #333;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  border-left: 4px solid transparent;
+}
+
+.sidebar-links a:hover {
+  background: #f6f8ff;
+  color: #0056d2;
+}
+
+.sidebar-links a.active {
+  background: #eef3ff;
+  color: #0056d2;
+  border-left-color: #0056d2;
+  font-weight: 600;
+}
+
+/* ---------------- Sidebar Footer ---------------- */
+.sidebar-footer {
+  padding: 16px 20px;
+  border-top: 1px solid #e5e5e5;
+}
+
+.sidebar-logout {
+  width: 100%;
+  background: #0056d2;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 0;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sidebar-logout:hover {
+  background: #0040a8;
+}
+
+/* ---------------- Responsive ---------------- */
+@media (max-width: 768px) {
+  .navbar-links {
+    display: none;
+  }
+  .navbar-user span {
+    display: none;
+  }
+}
+
+@media (max-width: 765px) {
+  .hide-on-tablet {
+    display: none !important;
+  }
+}

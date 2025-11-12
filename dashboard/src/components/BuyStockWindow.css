@@ -1,0 +1,204 @@
+/* BuyStockWindow.css — Compact, Minimal, Auto-Height */
+
+/* Overlay */
+.buy-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+/* Modal */
+.buy-modal {
+  background: #fff;
+  border: 2px solid #000;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 330px;
+  padding: 14px 16px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+  position: relative;
+  font-family: "Inter", system-ui, sans-serif;
+  animation: fadeIn 0.25s ease;
+  overflow: hidden;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Header */
+.buy-modal-header {
+  margin-bottom: 12px;
+}
+
+.buy-modal-header h3 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #0f172a;
+  margin: 0;
+}
+
+.stock-name {
+  font-size: 14.5px;
+  color: #6b7280;
+  margin-top: 3px;
+}
+
+.close-btn {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  border: none;
+  background: none;
+  font-size: 20px;
+  color: #6b7280;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+.close-btn:hover {
+  color: #000;
+}
+
+/* Price Row */
+.price-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 15.5px;
+  font-weight: 500;
+  color: #1e293b;
+  margin-bottom: 10px;
+}
+
+.price-row span:last-child {
+  font-weight: 600;
+  color: #16a34a;
+}
+
+/* Quantity Section */
+.quantity-section {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 8px 10px;
+  margin-bottom: 12px;
+}
+
+.quantity-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12.5px;
+  color: #6b7280;
+  margin-bottom: 6px;
+}
+
+.quantity-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.qty-btn {
+  width: 30px;
+  height: 30px;
+  border: none;
+  border-radius: 8px;
+  background: #f1f5f9;
+  color: #0f172a;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.qty-btn:hover {
+  background: #e2e8f0;
+}
+
+.qty-input {
+  width: 60px;
+  height: 34px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 500;
+  color: #111827;
+  outline: none;
+}
+.qty-input:focus {
+  border-color: #16a34a;
+}
+
+/* Error Message */
+.error-message {
+  margin-top: 5px;
+  font-size: 13px;
+  color: #dc2626;
+  text-align: center;
+}
+
+/* Amount Summary */
+.amount-summary {
+  border-top: 1px solid #e5e7eb;
+  padding-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14.5px;
+  color: #1e293b;
+}
+.summary-row.small {
+  font-size: 12.5px;
+  color: #6b7280;
+}
+
+/* Buy Button */
+.buy-btn {
+  width: 100%;
+  background: #16a34a;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 8px;
+  margin-top: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.buy-btn:hover {
+  background: #15803d;
+  box-shadow: 0 3px 10px rgba(22, 163, 74, 0.25);
+}
+.buy-btn:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .buy-modal {
+    padding: 14px;
+    max-width: 310px;
+  }
+  .qty-input {
+    width: 56px;
+  }
+}
