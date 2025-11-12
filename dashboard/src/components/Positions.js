@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Positions.css';
+import API_BASE_URL from '../config/api';
 
 function Positions() {
   const [positions, setPositions] = useState([]);
@@ -26,9 +27,9 @@ function Positions() {
         setLoading(true);
         console.log("Fetching positions from API...");
         
-        const response = await axios.get('http://localhost:5000/api/positions', {
-          withCredentials: true
-        });
+        const response = await axios.get(`${API_BASE_URL}/api/positions`, {
+  withCredentials: true
+});
         
         console.log("API response:", response.data);
         

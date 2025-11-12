@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "./BuyStockWindow.css";
+import API_BASE_URL from "../config/api";
 
 const BuyStockWindow = ({ stock, onClose, onBuy, funds }) => {
   const [quantity, setQuantity] = useState(1);
@@ -9,7 +10,10 @@ const BuyStockWindow = ({ stock, onClose, onBuy, funds }) => {
   const [loading, setLoading] = useState(false);
 
   const stockPrice = Number(stock.price ?? stock.ltp ?? 0);
-  const maxQuantity = Math.min(Math.floor(funds.currency / stockPrice) || 0, 10000);
+  const maxQuantity = Math.min(
+    Math.floor(funds.currency / stockPrice) || 0,
+    10000
+  );
 
   const handleQuantityChange = (e) => {
     const value = parseInt(e.target.value) || 1;
@@ -37,7 +41,7 @@ const BuyStockWindow = ({ stock, onClose, onBuy, funds }) => {
 
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/orders/buy",
+        `${API_BASE_URL}/api/orders/buy`,
         {
           symbol: stock.symbol,
           name: stock.name,
@@ -70,7 +74,9 @@ const BuyStockWindow = ({ stock, onClose, onBuy, funds }) => {
       <div className="buy-modal">
         <div className="buy-modal-header">
           <h3>Buy {stock.symbol}</h3>
-          <button className="close-btn" onClick={onClose}>×</button>
+          <button className="close-btn" onClick={onClose}>
+            ×
+          </button>
           <p className="stock-name">{stock.name}</p>
         </div>
 
@@ -87,7 +93,9 @@ const BuyStockWindow = ({ stock, onClose, onBuy, funds }) => {
             </div>
 
             <div className="quantity-controls">
-              <button className="qty-btn" onClick={decrementQuantity}>-</button>
+              <button className="qty-btn" onClick={decrementQuantity}>
+                -
+              </button>
               <input
                 type="number"
                 value={quantity}
@@ -96,7 +104,9 @@ const BuyStockWindow = ({ stock, onClose, onBuy, funds }) => {
                 max={maxQuantity}
                 className="qty-input"
               />
-              <button className="qty-btn" onClick={incrementQuantity}>+</button>
+              <button className="qty-btn" onClick={incrementQuantity}>
+                +
+              </button>
             </div>
 
             {error && <div className="error-message">{error}</div>}

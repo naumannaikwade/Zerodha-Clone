@@ -1,8 +1,9 @@
 // store/useFundsStore.js
 import { create } from "zustand";
 import axios from "axios";
+import API_BASE_URL from '../config/api';
 
-const API_URL = "http://localhost:5000/api/funds"; // backend URL
+const API_URL = `${API_BASE_URL}/api/funds`; // backend URL
 
 const useFundsStore = create((set, get) => ({
   funds: { equity: 0, commodity: 0, currency: 0 },

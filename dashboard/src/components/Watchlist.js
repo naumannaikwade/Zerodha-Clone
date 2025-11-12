@@ -3,10 +3,11 @@ import axios from "axios";
 import "./Watchlist.css";
 import BuyStockWindow from "./BuyStockWindow";
 import SellStockWindow from "./SellStockWindow";
+import API_BASE_URL from '../config/api';
 
 const fetchStocksFromBackend = async () => {
   try {
-    const res = await axios.get("http://localhost:5000/api/stocks");
+    const res = await axios.get(`${API_BASE_URL}/api/stocks`);
     return res.data;
   } catch (err) {
     console.error("Error fetching stocks:", err);
@@ -33,9 +34,9 @@ const Watchlist = () => {
   // ✅ Fetch user funds
   const fetchFunds = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/funds", {
-        withCredentials: true,
-      });
+      const res = await axios.get(`${API_BASE_URL}/api/funds`, {
+  withCredentials: true,
+});
       setFunds(res.data);
     } catch (err) {
       console.error("Failed to fetch funds:", err);
@@ -45,9 +46,9 @@ const Watchlist = () => {
   // ✅ Fetch holdings (real portfolio)
   const fetchPortfolio = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/holdings", {
-        withCredentials: true,
-      });
+      const res = await axios.get(`${API_BASE_URL}/api/holdings`, {
+  withCredentials: true,
+});
       setPortfolio(res.data || []);
     } catch (err) {
       console.error("Failed to fetch holdings:", err);

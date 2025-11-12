@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "./SellStockWindow.css";
+import API_BASE_URL from '../config/api';
 
 const SellStockWindow = ({ stock, onClose, onSell, portfolio = [] }) => {
   const [quantity, setQuantity] = useState(1);
@@ -37,14 +38,14 @@ const SellStockWindow = ({ stock, onClose, onSell, portfolio = [] }) => {
 
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/orders/sell",
-        {
-          symbol: stock.symbol,
-          price: stockPrice,
-          quantity,
-        },
-        { withCredentials: true }
-      );
+  `${API_BASE_URL}/api/orders/sell`,
+  {
+    symbol: stock.symbol,
+    price: stockPrice,
+    quantity,
+  },
+  { withCredentials: true }
+);
 
       if (res.data.success) {
         onSell(stock, quantity, res.data.order);

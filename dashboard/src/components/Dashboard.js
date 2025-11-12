@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./Dashboard.css";
 import { useNavigate } from "react-router-dom";
+import API_BASE_URL from '../config/api';
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -36,23 +37,20 @@ function Dashboard() {
         setLoading(true);
 
         // Get current user
-        const userRes = await axios.get("http://localhost:5000/api/auth/home", {
-          withCredentials: true,
-        });
+        const userRes = await axios.get(`${API_BASE_URL}/api/auth/home`, {
+  withCredentials: true,
+});
         if (userRes.data.success) setUser(userRes.data.user);
 
         // Fetch funds
-        const fundsResponse = await axios.get(
-          "http://localhost:5000/api/funds",
-          {
-            withCredentials: true,
-          }
-        );
+        const fundsResponse = await axios.get(`${API_BASE_URL}/api/funds`, {
+  withCredentials: true,
+});
         setFunds(fundsResponse.data);
 
         // Fetch holdings
         const holdingsResponse = await axios.get(
-          "http://localhost:5000/api/holdings",
+          `${API_BASE_URL}/api/holdings`,
           {
             withCredentials: true,
           }
@@ -61,7 +59,7 @@ function Dashboard() {
 
         // Fetch positions
         const positionsResponse = await axios.get(
-          "http://localhost:5000/api/positions",
+          `${API_BASE_URL}/api/positions`,
           {
             withCredentials: true,
           }
@@ -70,7 +68,7 @@ function Dashboard() {
 
         // Fetch recent orders
         const ordersResponse = await axios.get(
-          "http://localhost:5000/api/orders",
+          `${API_BASE_URL}/api/orders`,
           {
             withCredentials: true,
           }

@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Orders.css';
+import API_BASE_URL from '../config/api';
 
 function Orders() {
   const [orders, setOrders] = useState([]);
@@ -16,9 +17,9 @@ function Orders() {
     const fetchOrders = async () => {
       try {
         setLoading(true);
-        const response = await axios.get('http://localhost:5000/api/orders', {
-          withCredentials: true
-        });
+        const response = await axios.get(`${API_BASE_URL}/api/orders`, {
+  withCredentials: true
+});
         if (response.data && Array.isArray(response.data)) {
           setOrders(response.data);
         } else {
