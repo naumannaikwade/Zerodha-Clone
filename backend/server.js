@@ -20,7 +20,7 @@ connectDB();
 
 // Middleware
 app.use(cors({
-  origin: "http://localhost:3000",
+  origin: "https://xzerodhadashboard.onrender.com",
   credentials: true,
 }));
 
