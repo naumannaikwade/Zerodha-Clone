@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import "./Signup.css";
 
 function Signup() {
-  
   const [mobileNumber, setMobileNumber] = useState("");
+
+  const handleSignup = () => {
+    window.open("https://xzerodhadashboard.onrender.com", "_blank");
+  };
 
   return (
     <div className="signup-page mt-3" style={{marginBottom:"2rem"}}>
@@ -29,28 +32,15 @@ function Signup() {
           <h2>Signup now</h2>
           <p className="subtitle">Or track your existing application</p>
 
-          {/* <div className="input-group">
-            <div className="country-code">
-              <img src="https://flagcdn.com/w40/in.png" alt="India" width="24" />
-              <span>+91</span>
-            </div>
-            <input
-              type="tel"
-              placeholder="Enter your mobile number"
-              value={mobileNumber}
-              onChange={(e) => setMobileNumber(e.target.value)}
-            />
-          </div> */}
-
-          <button className="otp-button">Click here to go to Signup page</button>
+          <button className="otp-button" onClick={handleSignup}>
+            Click here to go to Signup page
+          </button>
 
           <p className="terms-text">
             By proceeding, you agree to the Zerodha <a href="#">terms & privacy policy</a>
           </p>
         </div>
       </div>
-
-      
     </div>
   );
 }
