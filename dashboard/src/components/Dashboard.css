@@ -1,0 +1,414 @@
+/* Global Layout */
+.dashboard-bg {
+  background-color: #fff;
+  /* min-height: 100vh; */
+  padding: 20px 30px;
+  font-family: "Inter", "Poppins", sans-serif;
+}
+
+.dashboard-container {
+  /* max-width: 1200px; */
+  margin: auto;
+}
+
+/* Header */
+.dashboard-header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 25px;
+}
+
+.dashboard-header h2 {
+  font-size: 1.9rem;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.dashboard-header p {
+  font-size: 1rem;
+  color: #6b7280;
+  margin-top: 4px;
+}
+
+/* === DASHBOARD CONTENT === */
+.dashboard-content {
+  display: flex;
+  flex-direction: column; /* stack all cards vertically */
+  gap: 24px;
+  width: 100%;
+  
+}
+
+/* Cards */
+.dashboard-card {
+  background: #ffffff;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  width: 97%; /* take full available width */
+  margin-bottom: 20px;
+  box-shadow: 0 0 15px rgba(128, 128, 128, 0.274);
+  margin: 10px 10px 10px 5px;
+  border-radius: 10px;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
+}
+
+/* .dashboard-left{
+  box-shadow: 0 0 15px rgba(128, 128, 128, 0.274);
+  margin: 10px;
+  border-radius: 10px;
+} */
+
+/* Card Header */
+.card-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.card-header h2 {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+  color: #111827;
+}
+
+.card-tagline {
+  font-size: 13px;
+  color: #6b7280;
+  margin-top: 3px;
+}
+
+/* Portfolio Summary */
+.portfolio-summary {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  padding: 18px 20px;
+}
+
+.summary-item {
+  background-color: #f9fafb;
+  border-radius: 8px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.summary-label {
+  font-size: 13px;
+  color: #6b7280;
+  margin-bottom: 6px;
+}
+
+.summary-value {
+  font-size: 17px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.summary-value.positive {
+  color: #16a34a;
+}
+.summary-value.negative {
+  color: #dc2626;
+}
+
+/* Quick Actions */
+.quick-actions .actions-container {
+  display: flex;
+  gap: 14px;
+  padding: 18px 20px;
+}
+
+.action-btn {
+  flex: 1;
+  padding: 10px 0;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  transition: 0.3s ease;
+}
+
+.action-btn.buy {
+  background-color: #ecfdf5;
+  color: #059669;
+}
+.action-btn.buy:hover {
+  background-color: #d1fae5;
+}
+
+.action-btn.sell {
+  background-color: #fee2e2;
+  color: #dc2626;
+}
+.action-btn.sell:hover {
+  background-color: #fecaca;
+}
+
+.action-btn.funds {
+  background-color: #dbeafe;
+  color: #2563eb;
+}
+.action-btn.funds:hover {
+  background-color: #bfdbfe;
+}
+
+/* Tables */
+.dashboard-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.dashboard-table th {
+  background: #f8fafc;
+  padding: 12px 16px;
+  font-size: 13px;
+  color: #374151;
+  text-align: left;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.dashboard-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #f3f4f6;
+  color: #1f2937;
+}
+
+.dashboard-table tr:hover {
+  background-color: #f9fafb;
+}
+
+/* Order Styling */
+.order-type,
+.order-status {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.order-type.buy {
+  background-color: #ecfdf5;
+  color: #059669;
+}
+
+.order-type.sell {
+  background-color: #fee2e2;
+  color: #dc2626;
+}
+
+.order-status.completed {
+  background-color: #ecfdf5;
+  color: #059669;
+}
+
+.order-status.pending {
+  background-color: #fef3c7;
+  color: #d97706;
+}
+
+/* Recent Orders */
+.recent-order-card {
+  width: 100%;
+}
+
+/* Loading */
+.dashboard-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  color: #6b7280;
+}
+
+/* Positive / Negative */
+.positive {
+  color: #16a34a !important;
+}
+.negative {
+  color: #dc2626 !important;
+}
+
+/* Mobile Responsive Styles for Dashboard (max-width: 765px) */
+@media (max-width: 765px) {
+  .dashboard-bg {
+    padding: 16px 20px;
+    background: #f8fafc;
+  }
+
+  .dashboard-container {
+    max-width: 100%;
+  }
+
+  /* Header */
+  .dashboard-header {
+    margin-bottom: 20px;
+  }
+
+  .dashboard-header h2 {
+    font-size: 1.6rem;
+  }
+
+  .dashboard-header p {
+    font-size: 0.9rem;
+  }
+
+  /* Content */
+  .dashboard-content {
+    gap: 20px;
+  }
+
+  .dashboard-card {
+    border-radius: 10px;
+    margin-bottom: 16px;
+  }
+
+  /* Card Header */
+  .card-header {
+    padding: 14px 16px;
+  }
+
+  .card-header h2 {
+    font-size: 15px;
+  }
+
+  .card-tagline {
+    font-size: 12px;
+  }
+
+  /* Portfolio Summary */
+  .portfolio-summary {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    padding: 16px;
+  }
+
+  .summary-item {
+    padding: 12px;
+  }
+
+  .summary-label {
+    font-size: 12px;
+    margin-bottom: 4px;
+  }
+
+  .summary-value {
+    font-size: 15px;
+  }
+
+  /* Quick Actions */
+  .quick-actions .actions-container {
+    gap: 10px;
+    padding: 16px;
+  }
+
+  .action-btn {
+    min-height: 44px;
+    font-size: 13px;
+  }
+
+  /* Tables */
+  .dashboard-table {
+    font-size: 13px;
+  }
+
+  .dashboard-table th {
+    padding: 10px 12px;
+    font-size: 12px;
+  }
+
+  .dashboard-table td {
+    padding: 10px 12px;
+  }
+
+  /* Order Styling */
+  .order-type,
+  .order-status {
+    padding: 4px 8px;
+    font-size: 11px;
+  }
+
+  /* Loading */
+  .dashboard-loading {
+    height: 150px;
+    font-size: 14px;
+  }
+}
+
+/* Small Phones (max-width: 480px) */
+@media (max-width: 480px) {
+  .dashboard-bg {
+    padding: 12px 16px;
+  }
+
+  .dashboard-header h2 {
+    font-size: 1.4rem;
+  }
+
+  .dashboard-header p {
+    font-size: 0.85rem;
+  }
+
+  .portfolio-summary {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 14px;
+  }
+
+  .quick-actions .actions-container {
+    flex-direction: column;
+  }
+
+  .action-btn {
+    width: 100%;
+  }
+
+  .dashboard-table {
+    font-size: 12px;
+  }
+
+  .dashboard-table th,
+  .dashboard-table td {
+    padding: 8px 10px;
+  }
+}
+
+/* Ultra Small Phones (max-width: 360px) */
+@media (max-width: 360px) {
+  .dashboard-bg {
+    padding: 10px 12px;
+  }
+
+  .dashboard-header h2 {
+    font-size: 1.3rem;
+  }
+
+  .card-header {
+    padding: 12px 14px;
+  }
+
+  .summary-item {
+    padding: 10px;
+  }
+
+  .summary-value {
+    font-size: 14px;
+  }
+
+  .dashboard-table {
+    font-size: 11px;
+  }
+
+  .dashboard-table th,
+  .dashboard-table td {
+    padding: 6px 8px;
+  }
+}

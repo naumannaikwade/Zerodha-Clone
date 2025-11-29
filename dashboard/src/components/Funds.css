@@ -1,0 +1,614 @@
+.funds-bg {
+  background-color: #ffffff;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.funds-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.funds-card {
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  padding: 24px;
+}
+
+.funds-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+}
+
+.funds-header h2 {
+  margin: 0 0 8px 0;
+  font-size: 24px;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.funds-tagline {
+  color: #6b7280;
+  font-size: 14px;
+  margin: 0 0 8px 0;
+}
+
+.fund-limit-info {
+  display: flex;
+  gap: 16px;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.fund-limit-info span {
+  background: #f3f4f6;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.funds-actions {
+  display: flex;
+  gap: 12px;
+  flex-direction: column;
+}
+
+.add-funds-btn {
+  background: #ff6b35;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.add-funds-btn:hover:not(:disabled) {
+  background: #e55a2b;
+  transform: translateY(-1px);
+}
+
+.add-funds-btn:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+}
+
+.buy-stock-btn {
+  background: #16a34a;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.buy-stock-btn:hover:not(:disabled) {
+  background: #15803d;
+  transform: translateY(-1px);
+}
+
+.buy-stock-btn:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+}
+
+/* Form Styles */
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  font-size: 14px;
+  color: #374151;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #ff6b35;
+  box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+}
+
+.total-cost {
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  padding: 10px 12px;
+  border-radius: 6px;
+  font-weight: 600;
+  color: #16a34a;
+  text-align: center;
+}
+
+.modal-info {
+  background: #f3f4f6;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  color: #6b7280;
+  margin: 8px 0;
+}
+
+.funds-error {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 6px;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  color: #dc2626;
+  font-size: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.funds-success {
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: 6px;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  color: #16a34a;
+  font-size: 14px;
+}
+
+.clear-error-btn {
+  background: none;
+  border: none;
+  color: #dc2626;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 0;
+  margin-left: 8px;
+}
+
+.funds-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 24px;
+}
+
+.funds-table th {
+  background: #f8f9fa;
+  padding: 12px 16px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 14px;
+  color: #374151;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.funds-table td {
+  padding: 12px 16px;
+  font-size: 14px;
+  color: #374151;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.funds-available-pill {
+  background: #f0fdf4;
+  color: #16a34a;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.funds-available-pill.total {
+  background: #dbeafe;
+  color: #2563eb;
+}
+
+.funds-summary-row {
+  background: #f8f9fa;
+  font-weight: 600;
+}
+
+.funds-summary-row td {
+  border-bottom: none;
+}
+
+/* Transaction History */
+.transactions-section {
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.transactions-section h3 {
+  margin: 0 0 16px 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.transactions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.transaction-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: #f8f9fa;
+  border-radius: 6px;
+  border-left: 4px solid #ff6b35;
+}
+
+.transaction-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.transaction-type {
+  font-weight: 600;
+  font-size: 14px;
+  color: #1a1a1a;
+}
+
+.transaction-segment {
+  font-size: 12px;
+  color: #6b7280;
+  text-transform: uppercase;
+}
+
+.transaction-details {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.transaction-amount {
+  font-weight: 600;
+  font-size: 14px;
+  color: #16a34a;
+}
+
+.transaction-description {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.transaction-date {
+  font-size: 11px;
+  color: #9ca3af;
+}
+
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  width: 90%;
+  max-width: 400px;
+  overflow: hidden;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-close:hover {
+  color: #374151;
+}
+
+.modal-body {
+  padding: 24px;
+}
+
+.modal-body p {
+  margin: 0 0 24px 0;
+  color: #6b7280;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.modal-confirm {
+  background: #ff6b35;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.modal-confirm:hover:not(:disabled) {
+  background: #e55a2b;
+}
+
+.modal-confirm:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+}
+
+.modal-cancel {
+  background: #ffffff;
+  color: #6b7280;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.modal-cancel:hover {
+  background: #f9fafb;
+  border-color: #9ca3af;
+} 
+
+
+/* Mobile Responsive Styles for Funds (max-width: 765px) */
+@media (max-width: 765px) {
+  .funds-bg {
+    padding: 16px 12px;
+    background: #f8fafc;
+  }
+
+  .funds-container {
+    max-width: 100%;
+    margin: 0 auto;
+  }
+
+  .funds-card {
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  }
+
+  /* Header */
+  .funds-header {
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .funds-header h2 {
+    font-size: 24px;
+    margin-bottom: 4px;
+  }
+
+  .funds-tagline {
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
+
+  .fund-limit-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .fund-limit-info span {
+    text-align: center;
+    padding: 6px 8px;
+    font-size: 11px;
+  }
+
+  .funds-actions {
+    width: 100%;
+  }
+
+  .add-funds-btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  /* Table */
+  .funds-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    margin-bottom: 24px;
+  }
+
+  .funds-table {
+    min-width: 500px;
+    margin-bottom: 0;
+  }
+
+  .funds-table th,
+  .funds-table td {
+    padding: 12px 14px;
+    font-size: 13px;
+  }
+
+  .funds-table th {
+    font-size: 12px;
+    background: #f1f5f9;
+  }
+
+  /* Transactions */
+  .transactions-section {
+    margin-top: 28px;
+    padding-top: 20px;
+  }
+
+  .transactions-section h3 {
+    font-size: 18px;
+    margin-bottom: 16px;
+  }
+
+  .transaction-item {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    padding: 16px;
+    margin-bottom: 8px;
+  }
+
+  .transaction-info {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .transaction-details {
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .transaction-amount {
+    font-size: 15px;
+  }
+
+  /* Modal */
+  .modal-content {
+    width: 90%;
+    max-width: 380px;
+    margin: 20px;
+  }
+
+  .modal-header {
+    padding: 20px;
+  }
+
+  .modal-body {
+    padding: 20px;
+  }
+
+  .modal-actions {
+    flex-direction: row;
+    gap: 12px;
+  }
+
+  .modal-confirm,
+  .modal-cancel {
+    flex: 1;
+    padding: 12px;
+  }
+}
+
+/* Small Phones (max-width: 480px) */
+@media (max-width: 480px) {
+  .funds-bg {
+    padding: 12px 8px;
+  }
+
+  .funds-card {
+    padding: 16px;
+  }
+
+  .funds-header h2 {
+    font-size: 22px;
+  }
+
+  .fund-limit-info {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  .funds-table {
+    margin: 10px 10px 15px 10px;
+  }
+  .funds-table th,
+  .funds-table td {
+    padding: 10px 12px;
+    font-size: 12px;
+  }
+
+  .transaction-item {
+    padding: 14px;
+  }
+
+  .modal-content {
+    width: 95%;
+    max-width: 340px;
+  }
+
+  .modal-actions {
+    flex-direction: column;
+  }
+
+  .modal-confirm,
+  .modal-cancel {
+    width: 100%;
+  }
+}
+
+/* Fix table wrapper - ADD THIS to your existing CSS */
+.funds-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  border-radius: 8px;
+}
+
+/* Update your existing funds-table styles */
+.funds-table {
+  width: 100%;
+  min-width: 600px; /* Ensure table has minimum width */
+  border-collapse: collapse;
+}

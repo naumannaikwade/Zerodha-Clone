@@ -1,0 +1,256 @@
+/* Holdings.css */
+.upper-div {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Base Styles */
+.holdings-bg {
+  background: #fff;
+  min-height: 100vh;
+  padding: 20px;
+}
+.holdings-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.holdings-card {
+  background: #fff;
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+/* Header Section */
+.holdings-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+}
+.holdings-header h2 {
+  margin: 0 0 8px;
+  font-size: 24px;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+.holdings-tagline {
+  font-size: 14px;
+  color: #6b7280;
+  margin: 0 0 8px;
+}
+.holdings-summary-info {
+  display: flex;
+  gap: 16px;
+  font-size: 12px;
+  color: #6b7280;
+}
+.holdings-summary-info span {
+  background: #f3f4f6;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+/* Table */
+.holdings-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+.holdings-table {
+  width: 100%;
+  min-width: 600px;
+  border-collapse: collapse;
+  margin-bottom: 24px;
+}
+.holdings-table th,
+.holdings-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #f3f4f6;
+  color: #374151;
+  font-size: 14px;
+  text-align: left;
+  white-space: nowrap;
+}
+.holdings-table th {
+  background: #f8f9fa;
+  font-weight: 600;
+  border-bottom: 1px solid #e5e7eb;
+}
+.holdings-table th:nth-child(6) {
+  text-align: left;
+}
+
+/* Holdings Specific Styles */
+.holdings-name {
+  color: #475569;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.holdings-pnl-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 2px;
+  white-space: nowrap;
+}
+
+/* Pills for P&L */
+.pnl-positive {
+  color: #16a34a;
+  font-weight: 600;
+}
+.pnl-negative {
+  color: #dc2626;
+  font-weight: 600;
+}
+
+/* Mobile Responsive Styles for Holdings (max-width: 765px) */
+@media (max-width: 765px) {
+  .holdings-bg {
+    padding: 16px 12px;
+    background: #f8fafc;
+  }
+
+  .holdings-container {
+    max-width: 100%;
+  }
+
+  .holdings-card {
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  }
+
+  /* Header */
+  .holdings-header {
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .holdings-header h2 {
+    font-size: 24px;
+    margin-bottom: 4px;
+  }
+
+  .holdings-tagline {
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
+
+  .holdings-summary-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .holdings-summary-info span {
+    text-align: center;
+    padding: 6px 8px;
+    font-size: 11px;
+  }
+
+  /* Table */
+  .holdings-table-wrapper {
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    margin-bottom: 20px;
+  }
+
+  .holdings-table {
+    min-width: 650px;
+    margin: 10px 10px 15px 10px;
+  }
+
+  .holdings-table th,
+  .holdings-table td {
+    padding: 12px 14px;
+    font-size: 13px;
+  }
+
+  .holdings-table th {
+    font-size: 12px;
+    background: #f1f5f9;
+  }
+
+  .holdings-table th:nth-child(6) {
+    text-align: right;
+  }
+
+  .holdings-name {
+    max-width: 120px;
+    font-size: 13px;
+  }
+
+  .holdings-pnl-container {
+    gap: 1px;
+    font-size: 13px;
+  }
+}
+
+/* Small Phones (max-width: 480px) */
+@media (max-width: 480px) {
+  .holdings-bg {
+    padding: 12px 8px;
+  }
+
+  .holdings-card {
+    padding: 16px;
+  }
+
+  .holdings-header h2 {
+    font-size: 22px;
+  }
+
+  .holdings-summary-info {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  .holdings-table {
+    min-width: 600px;
+  }
+
+  .holdings-table th,
+  .holdings-table td {
+    padding: 10px 12px;
+    font-size: 12px;
+  }
+
+  .holdings-name {
+    max-width: 100px;
+  }
+}
+
+/* Ultra Small Phones (max-width: 360px) */
+@media (max-width: 360px) {
+  .holdings-bg {
+    padding: 10px 6px;
+  }
+
+  .holdings-card {
+    padding: 14px;
+  }
+
+  .holdings-header h2 {
+    font-size: 20px;
+  }
+
+  .holdings-table {
+    min-width: 550px;
+  }
+
+  .holdings-table th,
+  .holdings-table td {
+    padding: 8px 10px;
+    font-size: 11px;
+  }
+
+  .holdings-pnl-container {
+    font-size: 12px;
+  }
+}
+
