@@ -1,74 +1,77 @@
-.dashboard-container {
-  display: flex;
-  height: 100vh;
+.trading-layout {
+  display: grid;
+  grid-template-columns: minmax(320px, 28vw) minmax(0, 1fr);
   width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  background: #f6f7f9;
+}
+
+.trading-layout__tabs {
+  display: none;
+}
+
+.trading-layout__watchlist,
+.trading-layout__workspace {
+  min-width: 0;
+  min-height: 0;
   overflow: hidden;
 }
 
-/* Desktop */
-.sidebar {
-  width: 30%;
-  min-width: 250px;
-  border-right: 1px solid #ccc;
-  overflow-y: auto;
-  background-color: #f8f9fa;
+.trading-layout__watchlist {
+  border-right: 1px solid #e2e5e9;
+  background: #fff;
 }
 
-.main-content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  background-color: #fff;
-  overflow-y: auto;
+.trading-layout__workspace {
+  background: #f6f7f9;
 }
 
-/* Mobile / Tablet */
-.mobile-navbar {
-  display: none;
-  flex-direction: column;
-  height: 100vh;
-  width: 100%;
-}
-
-.mobile-tabs {
-  display: flex;
-  justify-content: space-around;
-  background-color: #f8f9fa;
-  border-bottom: 1px solid #ccc;
-}
-
-.mobile-tabs button {
-  flex: 1;
-  padding: 12px 0;
-  border: none;
-  background: none;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.mobile-tabs button.active {
-  border-bottom: 3px solid #007bff;
-  color: #007bff;
-}
-
-.mobile-content {
-  flex: 1;
-  overflow-y: auto;
-  width: 100%;
-}
-
-/* Responsive */
 @media (max-width: 1200px) {
-  .desktop-only {
-    display: none;
-  }
-  .mobile-only {
+  .trading-layout {
     display: flex;
+    flex-direction: column;
   }
-}
 
-@media (min-width: 1201px) {
-  .mobile-only {
+  .trading-layout__tabs {
+    display: flex;
+    flex: 0 0 auto;
+    min-height: 48px;
+    padding: 5px;
+    gap: 4px;
+    background: #fff;
+    border-bottom: 1px solid #e2e5e9;
+    z-index: 30;
+  }
+
+  .trading-layout__tabs button {
+    flex: 1;
+    min-height: 38px;
+    border: 0;
+    border-radius: 7px;
+    background: transparent;
+    color: #64748b;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .trading-layout__tabs button.active {
+    color: #2563eb;
+    background: #eff6ff;
+  }
+
+  .trading-layout__watchlist,
+  .trading-layout__workspace {
     display: none;
+    flex: 1;
+    border: 0;
+  }
+
+  .trading-layout__watchlist.is-active,
+  .trading-layout__workspace.is-active {
+    display: block;
   }
 }

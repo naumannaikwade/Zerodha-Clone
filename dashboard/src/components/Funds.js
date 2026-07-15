@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import useFundsStore from "../store/useFundsStore";
 import "./Funds.css";
 
 function Funds() {
   const {
-    funds,             // fetched from backend dynamically
-    transactions,      // fetched from backend dynamically
+    funds,
+    transactions,
     loading,
     error,
-    fetchFunds,
     addDemoFunds,
     clearError,
     getTotalBalance,
@@ -19,12 +18,6 @@ function Funds() {
   const [showAddFunds, setShowAddFunds] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
 
-  // Fetch user funds on component mount
-  useEffect(() => {
-    fetchFunds();
-  }, [fetchFunds]);
-
-  // Handle adding demo funds
   const handleAddFunds = async () => {
     const result = await addDemoFunds();
     if (result.success) {
@@ -37,18 +30,13 @@ function Funds() {
     }
   };
 
-  // Safely format currency
   const format = (n) => `₹${(n || 0).toLocaleString("en-IN")}`;
-
-  // Dynamic totals
-  const totalBalance = getTotalBalance() || 0;
-  const totalMargin = getTotalMarginUsed() || 0;
-  const totalAvailable = getTotalAvailable() || 0;
+  const totalBalance = getTotalBalance();
+  const totalMargin = getTotalMarginUsed();
+  const totalAvailable = getTotalAvailable();
   const maxFunds = 100000;
-  const fundUsage = ((totalBalance / maxFunds) * 100).toFixed(1);
   const remainingFunds = Math.max(0, maxFunds - totalBalance);
 
-  // Prepare funds data dynamically for display
   const fundsData = [
     {
       id: 1,
@@ -77,23 +65,16 @@ function Funds() {
     <div className="funds-bg">
       <div className="funds-container">
         <div className="funds-card">
-          {/* Header */}
           <div className="funds-header">
-            <div>
+            <div className='upper-div'>
               <h2>Funds</h2>
-              <p className="funds-tagline">
-                View your available balance and margin across all segments
-              </p>
+              <p className="funds-tagline">View your available balance and margin across all segments</p>
               <div className="fund-limit-info">
                 <span>Fund Limit: {format(maxFunds)}</span>
-                <span>
-                  Used: {format(totalBalance)} ({fundUsage}%)
-                </span>
+                <span>Used: {format(totalBalance)}</span>
                 {remainingFunds > 0 && <span>Remaining: {format(remainingFunds)}</span>}
               </div>
             </div>
-
-            {/* Add Funds Button */}
             <div className="funds-actions">
               <button
                 onClick={() => setShowAddFunds(true)}
@@ -105,56 +86,46 @@ function Funds() {
             </div>
           </div>
 
-          {/* Errors */}
           {error && (
             <div className="funds-error">
               {error}
-              <button onClick={clearError} className="clear-error-btn">
-                ×
-              </button>
+              <button onClick={clearError} className="clear-error-btn">×</button>
             </div>
           )}
 
-          {/* Success message */}
           {successMessage && <div className="funds-success">{successMessage}</div>}
 
-          {/* Funds Table */}
           <div className="funds-table-wrapper">
-          <table className="funds-table">
-            <thead>
-              <tr>
-                <th>Type</th>
-                <th>Balance</th>
-                <th>Margin Used</th>
-                <th>Available</th>
-              </tr>
-            </thead>
-            <tbody>
-              {fundsData.map((f) => (
-                <tr key={f.id}>
-                  <td>{f.type}</td>
-                  <td>{format(f.balance)}</td>
-                  <td>{format(f.marginUsed)}</td>
-                  <td>
-                    <span className="funds-available-pill">{format(f.available)}</span>
-                  </td>
+            <table className="funds-table">
+              <thead>
+                <tr>
+                  <th>Type</th>
+                  <th>Balance</th>
+                  <th>Margin Used</th>
+                  <th>Available</th>
                 </tr>
-              ))}
-            </tbody>
-            <tfoot>
-              <tr className="funds-summary-row">
-                <td style={{ fontWeight: 700 }}>Total</td>
-                <td style={{ fontWeight: 700 }}>{format(totalBalance)}</td>
-                <td style={{ fontWeight: 700 }}>{format(totalMargin)}</td>
-                <td>
-                  <span className="funds-available-pill total">{format(totalAvailable)}</span>
-                </td>
-              </tr>
-            </tfoot>
-          </table>
+              </thead>
+              <tbody>
+                {fundsData.map((f) => (
+                  <tr key={f.id}>
+                    <td>{f.type}</td>
+                    <td>{format(f.balance)}</td>
+                    <td>{format(f.marginUsed)}</td>
+                    <td><span className="funds-available-pill">{format(f.available)}</span></td>
+                  </tr>
+                ))}
+              </tbody>
+              <tfoot>
+                <tr className="funds-summary-row">
+                  <td style={{ fontWeight: 700 }}>Total</td>
+                  <td style={{ fontWeight: 700 }}>{format(totalBalance)}</td>
+                  <td style={{ fontWeight: 700 }}>{format(totalMargin)}</td>
+                  <td><span className="funds-available-pill total">{format(totalAvailable)}</span></td>
+                </tr>
+              </tfoot>
+            </table>
           </div>
 
-          {/* Transaction History */}
           {transactions?.length > 0 && (
             <div className="transactions-section">
               <h3>Recent Transactions</h3>
@@ -180,31 +151,22 @@ function Funds() {
         </div>
       </div>
 
-      {/* Add Funds Modal */}
       {showAddFunds && (
         <div className="modal-overlay">
           <div className="modal-content">
             <div className="modal-header">
               <h3>Add Demo Funds</h3>
-              <button onClick={() => setShowAddFunds(false)} className="modal-close">
-                ×
-              </button>
+              <button onClick={() => setShowAddFunds(false)} className="modal-close">×</button>
             </div>
             <div className="modal-body">
               <p>Add remaining funds to reach ₹100,000 in your account?</p>
-              <p className="modal-info">
-                Current Balance: {format(totalBalance)} / {format(maxFunds)}
-              </p>
-              {remainingFunds > 0 && (
-                <p className="modal-info">Amount to add: {format(remainingFunds)}</p>
-              )}
+              <p className="modal-info">Current Balance: {format(totalBalance)} / {format(maxFunds)}</p>
+              {remainingFunds > 0 && <p className="modal-info">Amount to add: {format(remainingFunds)}</p>}
               <div className="modal-actions">
                 <button onClick={handleAddFunds} className="modal-confirm" disabled={loading}>
                   {loading ? "Adding..." : "Add Funds"}
                 </button>
-                <button onClick={() => setShowAddFunds(false)} className="modal-cancel">
-                  Cancel
-                </button>
+                <button onClick={() => setShowAddFunds(false)} className="modal-cancel">Cancel</button>
               </div>
             </div>
           </div>

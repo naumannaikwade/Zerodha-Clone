@@ -1,72 +1,96 @@
-// src/store/useAuthStore.js
 import { create } from "zustand";
-import axios from "axios";
-import API_BASE_URL from '../config/api';
+import api from "../api/client";
 
-const API_URL = `${API_BASE_URL}/api/auth`;
+let initializationPromise = null;
 
-const useAuthStore = create((set) => ({
+const saveToken = (token) => {
+  if (token) {
+    localStorage.setItem("token", token);
+  } else {
+    localStorage.removeItem("token");
+    localStorage.removeItem("userId");
+  }
+};
+
+const useAuthStore = create((set, get) => ({
   user: null,
   isAuthenticated: false,
-  loading: false,
+  loading: true,
+  initialized: false,
   error: null,
 
-  // ------------------- SIGNUP -------------------
-  signup: async (data) => {
+  initialize: async () => {
+    if (get().initialized) return;
+    if (initializationPromise) return initializationPromise;
+
+    initializationPromise = (async () => {
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        set({ loading: false, initialized: true });
+        return;
+      }
+
+      try {
+        const response = await api.get("/api/auth/verify");
+        set({
+          user: response.data.user,
+          isAuthenticated: true,
+          error: null,
+        });
+      } catch (error) {
+        saveToken(null);
+        set({ user: null, isAuthenticated: false });
+      } finally {
+        set({ loading: false, initialized: true });
+        initializationPromise = null;
+      }
+    })();
+
+    return initializationPromise;
+  },
+
+  signup: async (userData) => {
     set({ loading: true, error: null });
     try {
-      const res = await axios.post(`${API_URL}/signup`, data, { withCredentials: true });
-      set({ user: res.data.user, isAuthenticated: true });
-      return { success: true, user: res.data.user };
-    } catch (err) {
-      const errorMsg = err.response?.data?.message || "Signup failed";
-      set({ error: errorMsg });
-      return { success: false, error: errorMsg };
+      const response = await api.post("/api/auth/signup", userData);
+      const { user, token } = response.data;
+      saveToken(token);
+      localStorage.setItem("userId", user._id);
+      set({ user, isAuthenticated: true, initialized: true });
+      return { success: true, user };
+    } catch (error) {
+      const message = error.response?.data?.message || "Signup failed";
+      set({ error: message });
+      return { success: false, error: message };
     } finally {
       set({ loading: false });
     }
   },
 
-  // ------------------- LOGIN -------------------
-  login: async (form) => {
+  login: async (credentials) => {
     set({ loading: true, error: null });
     try {
-      const res = await axios.post(`${API_URL}/login`, form, { 
-        withCredentials: true 
-      });
-      set({ user: res.data.user, isAuthenticated: true, loading: false });
-      return { success: true, user: res.data.user };
-    } catch (err) {
-      set({ loading: false, error: err.response?.data?.message || "Login failed" });
-      return { success: false };
+      const response = await api.post("/api/auth/login", credentials);
+      const { user, token } = response.data;
+      saveToken(token);
+      localStorage.setItem("userId", user._id);
+      set({ user, isAuthenticated: true, initialized: true });
+      return { success: true, user };
+    } catch (error) {
+      const message = error.response?.data?.message || "Login failed";
+      set({ error: message });
+      return { success: false, error: message };
+    } finally {
+      set({ loading: false });
     }
   },
 
-  // ------------------- AUTO-LOGIN / CHECK SESSION -------------------
-  autoLogin: async () => {
-    try {
-      const res = await axios.get(`${API_URL}/home`, { withCredentials: true });
-      if (res.data?.user) {
-        set({ user: res.data.user, isAuthenticated: true });
-        return { success: true };
-      }
-      return { success: false };
-    } catch {
-      return { success: false };
-    }
+  logout: () => {
+    saveToken(null);
+    set({ user: null, isAuthenticated: false, error: null });
   },
 
-  // ------------------- LOGOUT -------------------
-  logout: async () => {
-    try {
-      await axios.post(`${API_URL}/logout`, {}, { withCredentials: true });
-      set({ user: null, isAuthenticated: false });
-    } catch (err) {
-      console.error("Logout failed", err);
-    }
-  },
-
-  // ------------------- CLEAR ERROR -------------------
   clearError: () => set({ error: null }),
 }));
 

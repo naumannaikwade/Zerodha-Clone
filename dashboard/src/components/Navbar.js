@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import useAuthStore from "../store/useAuthStore";
+import useFundsStore from "../store/useFundsStore";
+import useMarketStore from "../store/useMarketStore";
+import usePortfolioStore from "../store/usePortfolioStore";
 import "./Navbar.css";
 
 const Navbar = () => {
   const navigate = useNavigate();
   const { user, logout } = useAuthStore();
+  const resetFunds = useFundsStore((state) => state.reset);
+  const resetMarket = useMarketStore((state) => state.reset);
+  const resetPortfolio = usePortfolioStore((state) => state.reset);
   const [menuOpen, setMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
@@ -18,54 +24,32 @@ const Navbar = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  let username = "USER";
-  if (user?.username) username = user.username;
-  else {
-    try {
-      const token = localStorage.getItem("token");
-      if (token) {
-        const payload = JSON.parse(atob(token.split(".")[1]));
-        username = payload.username || username;
-      }
-    } catch {}
-  }
+  const username = user?.username || "USER";
 
   const handleLogout = () => {
     logout();
+    resetFunds();
+    resetMarket();
+    resetPortfolio();
     navigate("/login");
   };
 
   return (
     <>
       <div className="navbar">
-        <div
-          className="navbar-logo"
-          onClick={isMobile ? () => setMenuOpen(!menuOpen) : undefined}
-        >
+        <div className="navbar-logo" onClick={isMobile ? () => setMenuOpen(!menuOpen) : undefined}>
           <img src="/media/Logo.png" alt="logo" />
           {isMobile && <span className="menu-text">Menu</span>}
         </div>
 
         {!isMobile && (
           <div className="navbar-links">
-            <NavLink to="/home" className={({ isActive }) => (isActive ? "active" : "")}>
-              Dashboard
-            </NavLink>
-            <NavLink to="/orders" className={({ isActive }) => (isActive ? "active" : "")}>
-              Orders
-            </NavLink>
-            <NavLink to="/holdings" className={({ isActive }) => (isActive ? "active" : "")}>
-              Holdings
-            </NavLink>
-            <NavLink to="/positions" className={({ isActive }) => (isActive ? "active" : "")}>
-              Positions
-            </NavLink>
-            <NavLink to="/funds" className={({ isActive }) => (isActive ? "active" : "")}>
-              Funds
-            </NavLink>
-            <NavLink to="/apps" className={({ isActive }) => (isActive ? "active" : "")}>
-              Apps
-            </NavLink>
+            <NavLink to="/home" className={({ isActive }) => (isActive ? "active" : "")}>Dashboard</NavLink>
+            <NavLink to="/orders" className={({ isActive }) => (isActive ? "active" : "")}>Orders</NavLink>
+            <NavLink to="/holdings" className={({ isActive }) => (isActive ? "active" : "")}>Holdings</NavLink>
+            <NavLink to="/positions" className={({ isActive }) => (isActive ? "active" : "")}>Positions</NavLink>
+            <NavLink to="/funds" className={({ isActive }) => (isActive ? "active" : "")}>Funds</NavLink>
+            <NavLink to="/apps" className={({ isActive }) => (isActive ? "active" : "")}>Apps</NavLink>
           </div>
         )}
 
@@ -77,10 +61,7 @@ const Navbar = () => {
 
       {isMobile && (
         <>
-          <div
-            className={`sidebar-overlay ${menuOpen ? "active" : ""}`}
-            onClick={() => setMenuOpen(false)}
-          />
+          <div className={`sidebar-overlay ${menuOpen ? "active" : ""}`} onClick={() => setMenuOpen(false)} />
           <div className={`sidebar-nav ${menuOpen ? "active" : ""}`}>
             <div className="sidebar-header">
               <div className="sidebar-user">
@@ -90,9 +71,7 @@ const Navbar = () => {
                   <span className="sidebar-user-email">{user?.email || "Welcome"}</span>
                 </div>
               </div>
-              <button className="sidebar-close" onClick={() => setMenuOpen(false)}>
-                ×
-              </button>
+              <button className="sidebar-close" onClick={() => setMenuOpen(false)}>×</button>
             </div>
 
             <div className="sidebar-links">
@@ -116,9 +95,7 @@ const Navbar = () => {
             </div>
 
             <div className="sidebar-footer">
-              <button onClick={handleLogout} className="sidebar-logout">
-                Logout
-              </button>
+              <button onClick={handleLogout} className="sidebar-logout">Logout</button>
             </div>
           </div>
         </>

@@ -1,6 +1,6 @@
 .watchlist-container {
   padding: 0;
-  height: 100vh;
+  height: 100%;
   background-color: #fafafa;
   font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     sans-serif;
@@ -28,18 +28,20 @@
 }
 
 /* Header */
-.header {
+.watchlist-header {
   background-color: #ffffff;
   border-bottom: 1px solid #e0e0e0;
   padding: 16px 20px;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 60px;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 76px;
   box-sizing: border-box;
 }
 
-.header h2 {
+.watchlist-header h2 {
   margin: 0;
   font-size: 16px;
   font-weight: 600;
@@ -52,13 +54,16 @@
   font-weight: 500;
   align-items: center;
   flex-wrap: wrap;
+  width: 100%;
 }
 
 .refresh-info {
   display: flex;
   align-items: center;
   gap: 1rem;
-  margin: auto;
+  justify-content: space-between;
+  width: 100%;
+  margin: 0;
 }
 
 .last-updated {
@@ -81,7 +86,7 @@
 .search-bar {
   background-color: #ffffff;
   border-bottom: 1px solid #e0e0e0;
-  padding: 12px 16px;
+  padding: 12px;
 }
 
 .search-input {
@@ -102,7 +107,7 @@
 }
 
 /* Main Content */
-.main-content {
+.watchlist-main-content {
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -117,8 +122,8 @@
   border-bottom: 1px solid #e0e0e0;
   padding: 12px 16px;
   display: grid;
-  grid-template-columns: 1fr 80px 80px 80px;
-  gap: 20px;
+  grid-template-columns: minmax(72px, 1fr) 58px 58px 68px;
+  gap: 8px;
   font-size: 11px;
   font-weight: 600;
   color: #9e9e9e;
@@ -127,18 +132,6 @@
   position: sticky;
   top: 0;
   z-index: 10;
-}
-
-.table-header div:nth-child(2) {
-  padding-right: 20px;
-}
-
-.table-header div:nth-child(3) {
-  padding-right: 12px;
-}
-
-.table-header div:nth-child(4) {
-  padding-right: 20px;
 }
 
 .table-header div:nth-child(2),
@@ -167,10 +160,10 @@
 /* Stock Row */
 .stock-row {
   display: grid;
-  grid-template-columns: 1fr 80px 70px 85px;
-  gap: 12px;
+  grid-template-columns: minmax(72px, 1fr) 58px 58px 68px;
+  gap: 8px;
   align-items: center;
-  padding: 12px 16px;
+  padding: 12px;
   border-bottom: 1px solid #f0f0f0;
   background-color: #fff;
   transition: background-color 0.15s ease;
@@ -185,12 +178,15 @@
   display: flex;
   flex-direction: column;
   gap: 2px;
+  min-width: 0;
 }
 
 .stock-symbol {
   font-weight: 500;
   color: #212121;
   font-size: 13px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .stock-exchange {
@@ -221,11 +217,11 @@
   font-size: 11px;
 }
 
-.positive {
+.watchlist-positive {
   color: #00c896;
 }
 
-.negative {
+.watchlist-negative {
   color: #ff6b6b;
 }
 
@@ -245,8 +241,17 @@
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  gap: 10px;
+  gap: 6px;
   height: 100%;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+}
+
+.stock-row:hover .action-buttons,
+.stock-row:focus-within .action-buttons {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .action-buttons .buy-button,
@@ -325,161 +330,41 @@
   color: #ffffff;
 }
 
-/* Buy Modal Styles */
-.buy-modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-}
-
-.buy-modal {
-  background-color: white;
-  border-radius: 8px;
-  width: 320px;
-  max-width: 95%;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  overflow: hidden;
-}
-
-.buy-modal-header {
-  background-color: #f5f7fa;
-  padding: 16px;
-  border-bottom: 1px solid #e0e0e0;
-  position: relative;
-}
-
-.buy-modal-header h3 {
-  margin: 0;
-  font-size: 16px;
-  font-weight: 500;
-}
-
-.close-btn {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  background: none;
-  border: none;
-  font-size: 20px;
-  cursor: pointer;
-  color: #666;
-}
-
-.stock-name {
-  margin: 4px 0 0;
-  font-size: 13px;
-  color: #666;
-}
-
-.buy-modal-body {
-  padding: 16px;
-}
-
-/* Quantity Section */
-.quantity-controls {
-  display: flex;
-  align-items: center;
-}
-
-.qty-btn {
-  width: 36px;
-  height: 36px;
-  border: 1px solid #ddd;
-  background-color: #f5f7fa;
-  font-size: 18px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.qty-btn:first-child {
-  border-radius: 4px 0 0 4px;
-}
-
-.qty-btn:last-child {
-  border-radius: 0 4px 4px 0;
-}
-
-.qty-btn:hover {
-  background-color: #e9ecef;
-}
-
-.qty-input {
-  width: 100%;
-  height: 36px;
-  border: 1px solid #ddd;
-  border-left: none;
-  border-right: none;
-  text-align: center;
-  font-size: 14px;
-  outline: none;
-}
-
-.error-message {
-  color: #ff6b6b;
-  font-size: 12px;
-  margin-top: 8px;
-  text-align: center;
-}
-
-.amount-summary {
-  background-color: #f5f7fa;
-  border-radius: 4px;
-  padding: 12px;
-  margin-bottom: 16px;
-}
-
-.summary-row {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 4px;
-}
-
-.summary-row:last-child {
-  margin-bottom: 0;
-}
-
-.summary-row.small {
-  font-size: 12px;
-}
-
-.summary-row span:first-child {
-  color: #666;
-}
-
-.summary-row span:last-child {
-  font-weight: 500;
+@media (max-width: 1200px) {
+  .action-buttons {
+    opacity: 1;
+    pointer-events: auto;
+  }
 }
 
 /* Responsive Design for max-width: 1030px */
 @media (max-width: 1030px) {
   .watchlist-container {
-    height: 100vh;
+    height: 100%;
     background-color: #f8fafc;
   }
 
   /* Header */
-  .header {
+  .watchlist-header {
     padding: 14px 18px;
-    height: 58px;
+    min-height: 58px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
   }
 
-  .header h2 {
+  .watchlist-header h2 {
     font-size: 15px;
   }
 
   .market-indices {
     font-size: 11px;
+    width: auto;
   }
 
   .refresh-info {
     gap: 0.75rem;
+    width: auto;
   }
 
   .last-updated,
@@ -545,6 +430,8 @@
   /* Action Buttons */
   .action-buttons {
     gap: 8px;
+    opacity: 1;
+    pointer-events: auto;
   }
 
   .action-buttons .buy-button,
@@ -569,48 +456,301 @@
     font-size: 11px;
   }
 
-  /* Buy Modal */
-  .buy-modal {
-    width: 85%;
-    max-width: 340px;
+}
+
+/* For small devices - maintain same text alignment as large devices */
+@media (max-width: 768px) {
+  .table-header div:nth-child(2),
+  .table-header div:nth-child(3),
+  .table-header div:nth-child(4) {
+    text-align: right;
   }
 
-  .buy-modal-header {
-    padding: 15px;
+  .stock-price,
+  .stock-change,
+  .stock-volume {
+    text-align: right;
+  }
+}
+
+/* For very small devices (max-width: 300px) */
+@media (max-width: 300px) {
+  .table-header div:nth-child(2),
+  .table-header div:nth-child(3),
+  .table-header div:nth-child(4) {
+    text-align: right;
   }
 
-  .buy-modal-header h3 {
-    font-size: 15px;
+  .stock-price,
+  .stock-change,
+  .stock-volume {
+    text-align: right;
+  }
+}
+
+/* For very small devices (max-width: 300px) */
+@media (max-width: 300px) {
+  .watchlist-main-content {
+    overflow-x: auto;
+  }
+  
+  .table-header,
+  .stock-row {
+    min-width: 280px;
+  }
+  
+  .table-header div:nth-child(2),
+  .table-header div:nth-child(3),
+  .table-header div:nth-child(4),
+  .stock-price,
+  .stock-change,
+  .stock-volume {
+    text-align: right;
+  }
+}
+
+/* For very small devices (max-width: 300px) */
+@media (max-width: 300px) {
+  .watchlist-main-content {
+    overflow-x: auto;
+  }
+  
+  .table-header,
+  .stock-row {
+    min-width: 280px;
+    grid-template-columns: 1fr 60px 60px 70px;
+    gap: 8px;
+    padding: 8px 12px;
+  }
+  
+  .table-header {
+    font-size: 9px;
+  }
+  
+  .stock-row {
+    font-size: 11px;
+  }
+  
+  .table-header div:nth-child(2),
+  .table-header div:nth-child(3),
+  .table-header div:nth-child(4),
+  .stock-price,
+  .stock-change,
+  .stock-volume {
+    text-align: right;
+  }
+  
+  .action-buttons .buy-button,
+  .action-buttons .sell-button {
+    width: 24px;
+    height: 24px;
+    font-size: 10px;
+  }
+}
+
+/* For very small devices (max-width: 300px) */
+@media (max-width: 300px) {
+  .watchlist-main-content {
+    overflow-x: auto;
+  }
+  
+  .table-header,
+  .stock-row {
+    min-width: 280px;
+    grid-template-columns: 1fr 60px 60px 70px;
+    gap: 8px;
+    padding: 8px 12px;
+    white-space: nowrap;
+  }
+  
+  .table-header {
+    font-size: 9px;
+  }
+  
+  .stock-row {
+    font-size: 11px;
+    align-items: center;
+  }
+  
+  .stock-info {
+    flex-direction: row;
+    gap: 8px;
+    align-items: center;
+  }
+  
+  .watchlist-stock-name {
+    font-size: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 80px;
+  }
+  
+  .stock-change {
+    flex-direction: row;
+    gap: 4px;
+    align-items: center;
+  }
+  
+  .change-amount {
+    font-size: 9px;
+  }
+  
+  .table-header div:nth-child(2),
+  .table-header div:nth-child(3),
+  .table-header div:nth-child(4),
+  .stock-price,
+  .stock-change,
+  .stock-volume {
+    text-align: right;
+  }
+  
+  .action-buttons {
+    gap: 6px;
+  }
+  
+  .action-buttons .buy-button,
+  .action-buttons .sell-button {
+    width: 24px;
+    height: 24px;
+    font-size: 10px;
+  }
+}
+
+/* For 360px width devices */
+@media (max-width: 360px) {
+  .watchlist-container {
+    height: 100%;
+    background-color: #f8fafc;
   }
 
-  .stock-name {
+  .watchlist-main-content {
+    overflow-x: auto;
+  }
+  
+  .table-header,
+  .stock-row {
+    min-width: 340px;
+    grid-template-columns: 90px 70px 70px 80px;
+    gap: 8px;
+    padding: 8px 12px;
+  }
+  
+  .table-header {
+    font-size: 10px;
+    white-space: nowrap;
+  }
+
+.table-header div:nth-child(2) {
+  margin-right: -10px;
+}
+
+.table-header div:nth-child(3) {
+  margin-right: -10px;
+}
+  
+  .stock-row {
     font-size: 12px;
+    align-items: center;
+    white-space: nowrap;
   }
-
-  .buy-modal-body {
-    padding: 15px;
+  
+  .stock-info {
+    flex-direction: column;
+    gap: 2px;
+    align-items: flex-start;
+    min-width: 0;
   }
-
-  .qty-btn {
-    width: 34px;
-    height: 34px;
-    font-size: 17px;
+  
+  .stock-symbol {
+    font-size: 12px;
+    font-weight: 600;
   }
-
-  .qty-input {
-    height: 34px;
-    font-size: 13px;
+  
+  .watchlist-stock-name {
+    font-size: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 110px;
+    color: #666;
   }
-
-  .amount-summary {
-    padding: 11px;
+  
+  .stock-price {
+    font-size: 12px;
+    font-weight: 500;
   }
-
-  .summary-row {
-    font-size: 13px;
+  
+  .stock-change {
+    flex-direction: column;
+    gap: 1px;
+    align-items: flex-end;
   }
-
-  .summary-row.small {
+  
+  .stock-change > span {
+    font-size: 11px;
+    font-weight: 500;
+  }
+  
+  .change-amount {
+    font-size: 10px;
+  }
+  
+  .table-header div:nth-child(2),
+  .table-header div:nth-child(3),
+  .table-header div:nth-child(4),
+  .stock-price,
+  .stock-change,
+  .stock-volume {
+    text-align: right;
+  }
+  
+  .action-buttons {
+    gap: 6px;
+  }
+  
+  .action-buttons .buy-button,
+  .action-buttons .sell-button {
+    width: 26px;
+    height: 26px;
+    font-size: 11px;
+  }
+  
+  /* Header adjustments */
+  .watchlist-header {
+    padding: 12px 14px;
+    min-height: 58px;
+  }
+  
+  .watchlist-header h2 {
+    font-size: 14px;
+  }
+  
+  .refresh-info {
+    flex-direction: column;
+    gap: 4px;
+    align-items: flex-end;
+  }
+  
+  .last-updated,
+  .refresh-countdown {
+    font-size: 9px;
+  }
+  
+  /* Search bar */
+  .search-bar {
+    padding: 10px 12px;
+  }
+  
+  .search-input {
+    font-size: 12px;
+    padding: 8px 10px;
+  }
+  
+  /* Pagination */
+  .page-btn {
+    width: 40px;
+    height: 40px;
     font-size: 11px;
   }
 }

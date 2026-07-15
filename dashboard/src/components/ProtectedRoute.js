@@ -1,22 +1,23 @@
-import React, { useEffect, useState } from "react";
-import { Navigate } from "react-router-dom";
-import useAuthStore from "../store/useAuthStore";
+import React from 'react';
+import { Navigate } from 'react-router-dom';
+import useAuthStore from '../store/useAuthStore';
 
 const ProtectedRoute = ({ children }) => {
-  const { isAuthenticated, autoLogin } = useAuthStore();
-  const [loading, setLoading] = useState(true);
+  const { isAuthenticated, loading, initialized } = useAuthStore();
 
-  useEffect(() => {
-    const init = async () => {
-      await autoLogin();
-      setLoading(false);
-    };
-    init();
-  }, [autoLogin]);
+  if (loading || !initialized) {
+    return (
+      <div className="loading-container">
+        <div className="loading-spinner">Loading...</div>
+      </div>
+    );
+  }
 
-  if (loading) return <div>Loading...</div>;
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
 
-  return isAuthenticated ? children : <Navigate to="/login" replace />;
+  return children;
 };
 
 export default ProtectedRoute;

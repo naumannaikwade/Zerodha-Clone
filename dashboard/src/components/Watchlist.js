@@ -1,111 +1,39 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import useMarketStore from "../store/useMarketStore";
+import useFundsStore from "../store/useFundsStore";
+import usePortfolioStore from "../store/usePortfolioStore";
 import "./Watchlist.css";
 import BuyStockWindow from "./BuyStockWindow";
 import SellStockWindow from "./SellStockWindow";
-import API_BASE_URL from '../config/api';
-
-const fetchStocksFromBackend = async () => {
-  try {
-    const res = await axios.get(`${API_BASE_URL}/api/stocks`);
-    return res.data;
-  } catch (err) {
-    console.error("Error fetching stocks:", err);
-    return [];
-  }
-};
 
 const Watchlist = () => {
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
-  const [hoveredStockSymbol, setHoveredStockSymbol] = useState(null);
   const [buyingStock, setBuyingStock] = useState(null);
   const [sellingStock, setSellingStock] = useState(null);
-  const [orders, setOrders] = useState([]);
-  const [funds, setFunds] = useState({ currency: 100000 });
-  const [stockData, setStockData] = useState([]);
-  const [portfolio, setPortfolio] = useState([]); // ✅ user’s holdings
-  const [loading, setLoading] = useState(true);
-  const [lastUpdated, setLastUpdated] = useState(null);
   const [refreshCountdown, setRefreshCountdown] = useState(300);
+
+  const { stocks, loading, lastUpdated } = useMarketStore();
+  const { funds, fetchFunds } = useFundsStore();
+  const portfolio = usePortfolioStore((state) => state.holdings);
+  const fetchHoldings = usePortfolioStore((state) => state.fetchHoldings);
+  const fetchPositions = usePortfolioStore((state) => state.fetchPositions);
+  const fetchOrders = usePortfolioStore((state) => state.fetchOrders);
 
   const itemsPerPage = 9;
 
-  // ✅ Fetch user funds
-  const fetchFunds = async () => {
-    try {
-      const res = await axios.get(`${API_BASE_URL}/api/funds`, {
-  withCredentials: true,
-});
-      setFunds(res.data);
-    } catch (err) {
-      console.error("Failed to fetch funds:", err);
-    }
-  };
-
-  // ✅ Fetch holdings (real portfolio)
-  const fetchPortfolio = async () => {
-    try {
-      const res = await axios.get(`${API_BASE_URL}/api/holdings`, {
-  withCredentials: true,
-});
-      setPortfolio(res.data || []);
-    } catch (err) {
-      console.error("Failed to fetch holdings:", err);
-    }
-  };
-
-  // ✅ Fetch stocks
-  const fetchAllStocks = async () => {
-    setLoading(true);
-    setRefreshCountdown(300);
-    const stocks = await fetchStocksFromBackend();
-    setStockData(stocks);
-    setLastUpdated(new Date());
-    setLoading(false);
-  };
-
-  // ✅ On mount
-  useEffect(() => {
-    fetchFunds();
-    fetchAllStocks();
-    fetchPortfolio();
-
-    const fetchInterval = setInterval(fetchAllStocks, 300000);
-    const countdownInterval = setInterval(() => {
-      setRefreshCountdown((prev) => (prev <= 1 ? 300 : prev - 1));
-    }, 1000);
-
-    return () => {
-      clearInterval(fetchInterval);
-      clearInterval(countdownInterval);
-    };
-  }, []);
-
-  // ✅ Handle Buy
+  // Handle Buy
   const handleBuyStock = async (stock, quantity, order) => {
-    setOrders((prev) => [...prev, order]);
-    setFunds((prev) => ({
-      ...prev,
-      currency: prev.currency - (stock.price || stock.ltp || 0) * quantity,
-    }));
-
-    await fetchPortfolio(); // 🔁 Sync with backend
+    await Promise.all([fetchFunds(), fetchHoldings(), fetchPositions(), fetchOrders()]);
   };
 
-  // ✅ Handle Sell
+  // Handle Sell
   const handleSellStock = async (stock, quantity, order) => {
-    setOrders((prev) => [...prev, order]);
-    setFunds((prev) => ({
-      ...prev,
-      currency: prev.currency + (stock.price || stock.ltp || 0) * quantity,
-    }));
-
-    await fetchPortfolio(); // 🔁 Sync with backend
+    await Promise.all([fetchFunds(), fetchHoldings(), fetchPositions(), fetchOrders()]);
   };
 
-  // ✅ Search and Pagination
-  const filtered = stockData.filter(
+  // Search and Pagination
+  const filtered = stocks.filter(
     (stock) =>
       stock.symbol?.toLowerCase().includes(search.toLowerCase()) ||
       stock.name?.toLowerCase().includes(search.toLowerCase())
@@ -114,9 +42,16 @@ const Watchlist = () => {
   const paginated = filtered.slice((page - 1) * itemsPerPage, page * itemsPerPage);
   const totalPages = Math.ceil(filtered.length / itemsPerPage);
 
+  // Countdown timer
+  useEffect(() => {
+    const countdownInterval = setInterval(() => {
+      setRefreshCountdown((prev) => (prev <= 1 ? 300 : prev - 1));
+    }, 1000);
+    return () => clearInterval(countdownInterval);
+  }, []);
+
   return (
     <div className="watchlist-container">
-      {/* Buy Modal */}
       {buyingStock && (
         <BuyStockWindow
           stock={buyingStock}
@@ -126,7 +61,6 @@ const Watchlist = () => {
         />
       )}
 
-      {/* Sell Modal */}
       {sellingStock && (
         <SellStockWindow
           stock={sellingStock}
@@ -136,15 +70,12 @@ const Watchlist = () => {
         />
       )}
 
-      {/* Header */}
-      <div className="header">
+      <div className="watchlist-header">
         <h2>Live Stock Watchlist</h2>
         <div className="market-indices">
           <div className="refresh-info">
             {lastUpdated && (
-              <span className="last-updated">
-                Updated: {lastUpdated.toLocaleTimeString()}
-              </span>
+              <span className="last-updated">Updated: {lastUpdated.toLocaleTimeString()}</span>
             )}
             <span className="refresh-countdown">
               Next refresh: {Math.floor(refreshCountdown / 60)}m {refreshCountdown % 60}s
@@ -153,7 +84,6 @@ const Watchlist = () => {
         </div>
       </div>
 
-      {/* Search Bar */}
       <div className="search-bar">
         <input
           type="text"
@@ -167,8 +97,7 @@ const Watchlist = () => {
         />
       </div>
 
-      {/* Stock List */}
-      <div className="main-content">
+      <div className="watchlist-main-content">
         <div className="table-header">
           <div>Instrument</div>
           <div>LTP</div>
@@ -178,7 +107,9 @@ const Watchlist = () => {
 
         <div className="stock-list">
           {loading ? (
-            <div className="loading-message">Loading data...</div>
+            <div className="loading-message">Loading stock data...</div>
+          ) : stocks.length === 0 ? (
+            <div className="no-results">No stocks available. Please check backend connection.</div>
           ) : paginated.length === 0 ? (
             <div className="no-results">No matching stocks found.</div>
           ) : (
@@ -186,67 +117,37 @@ const Watchlist = () => {
               <div
                 key={stock.symbol}
                 className="stock-row"
-                onMouseEnter={() => setHoveredStockSymbol(stock.symbol)}
-                onMouseLeave={() => setHoveredStockSymbol(null)}
               >
                 <div className="stock-info">
                   <span className="stock-symbol">{stock.symbol}</span>
-                  <span className="stock-name">{stock.name}</span>
+                  <span className="watchlist-stock-name">{stock.name}</span>
                 </div>
 
-                <div className="stock-price">
-                  ₹{Number(stock.price ?? stock.ltp ?? 0).toFixed(2)}
-                </div>
+                <div className="stock-price">₹{Number(stock.ltp ?? 0).toFixed(2)}</div>
 
                 <div className="stock-change">
-                  <span className={stock.change < 0 ? "negative" : "positive"}>
+                  <span className={stock.change < 0 ? "watchlist-negative" : "watchlist-positive"}>
                     {stock.change > 0 ? "+" : ""}
                     {(stock.changePercent ?? 0).toFixed(2)}%
                   </span>
-                  <span
-                    className={`change-amount ${
-                      stock.change < 0 ? "negative" : "positive"
-                    }`}
-                  >
+                  <span className={`change-amount ${stock.change < 0 ? "watchlist-negative" : "watchlist-positive"}`}>
                     {stock.change > 0 ? "+" : ""}
                     {(stock.change ?? 0).toFixed(2)}
                   </span>
                 </div>
 
-                {/* Buy/Sell Buttons */}
                 <div className="stock-volume">
-                  {hoveredStockSymbol === stock.symbol ? (
-                    <div className="action-buttons">
-                      <button
-                        className="buy-button"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setBuyingStock(stock);
-                        }}
-                      >
-                        B
-                      </button>
-                      <button
-                        className="sell-button"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setSellingStock(stock);
-                        }}
-                      >
-                        S
-                      </button>
-                    </div>
-                  ) : (
-                    <div>{stock.volume ?? "--"}</div>
-                  )}
+                  <div className="action-buttons">
+                    <button className="buy-button" aria-label={`Buy ${stock.symbol}`} onClick={() => setBuyingStock(stock)}>B</button>
+                    <button className="sell-button" aria-label={`Sell ${stock.symbol}`} onClick={() => setSellingStock(stock)}>S</button>
+                  </div>
                 </div>
               </div>
             ))
           )}
         </div>
 
-        {/* Pagination */}
-        {totalPages > 1 && !loading && (
+        {totalPages > 1 && !loading && stocks.length > 0 && (
           <div className="pagination">
             {[...Array(totalPages)].map((_, i) => (
               <button

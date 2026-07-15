@@ -1,7 +1,7 @@
 /* ---------------- Base ---------------- */
 .positions-bg {
   background: #fff;
-  min-height: 100vh;
+  min-height: 100%;
   padding: 20px;
 }
 

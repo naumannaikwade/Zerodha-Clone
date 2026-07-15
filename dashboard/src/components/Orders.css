@@ -1,44 +1,216 @@
-/* Orders.css */
-
 /* Base Styles */
-.orders-bg { background: #fff; min-height: 100vh; padding: 20px; }
-.orders-container { max-width: 1200px; margin: 0 auto; }
-.orders-card { background: #fff; border-radius: 8px; padding: 24px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); }
-.orders-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; }
-.orders-header h2 { margin: 0 0 8px; font-size: 24px; font-weight: 600; color: #1a1a1a; }
-.orders-tagline { font-size: 14px; color: #6b7280; margin: 0 0 8px; }
-.orders-summary-info { display: flex; gap: 16px; font-size: 12px; color: #6b7280; }
-.orders-summary-info span { background: #f3f4f6; padding: 4px 8px; border-radius: 4px; }
+.orders-bg {
+  background: #fff;
+  min-height: 100%;
+  padding: 20px;
+}
+
+.orders-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.orders-card {
+  background: #fff;
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+.orders-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+}
+
+.upper-div {
+  flex: 1; /* This makes it take full width */
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.orders-header h2 {
+  margin: 0 0 4px 0;
+  font-size: 24px;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.orders-tagline {
+  font-size: 14px;
+  color: #6b7280;
+  margin: 0 0 12px 0;
+}
+
+.orders-summary-info {
+  display: flex;
+  gap: 16px;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.orders-summary-info span {
+  background: #f3f4f6;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
 
 /* Table */
-.orders-table-wrapper { width: 100%; overflow-x: auto; }
-.orders-table { width: 100%; min-width: 600px; border-collapse: collapse; margin-bottom: 24px; }
-.orders-table th, .orders-table td { padding: 12px 16px; border-bottom: 1px solid #f3f4f6; color: #374151; font-size: 14px; text-align: left; }
-.orders-table th { background: #f8f9fa; font-weight: 600; border-bottom: 1px solid #e5e7eb; }
-.orders-summary-row { background: #f8f9fa; font-weight: 600; }
-.orders-summary-row td { border-bottom: none; }
+.orders-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.orders-table {
+  width: 100%;
+  min-width: 600px;
+  border-collapse: collapse;
+  margin-bottom: 24px;
+}
+
+.orders-table th,
+.orders-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #f3f4f6;
+  color: #374151;
+  font-size: 14px;
+  text-align: left;
+}
+
+.orders-table th {
+  background: #f8f9fa;
+  font-weight: 600;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.orders-summary-row {
+  background: #f8f9fa;
+  font-weight: 600;
+}
+
+.orders-summary-row td {
+  border-bottom: none;
+}
 
 /* Pills */
-.order-type-pill { display: inline-block; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 600; }
-.order-type-pill.buy { background: #f0fdf4; color: #16a34a; border: 1px solid #bbf7d0; }
-.order-type-pill.sell { background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; }
-.order-status-pill { display: inline-block; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 600; }
-.order-status-pill.completed { background: #f0fdf4; color: #16a34a; border: 1px solid #bbf7d0; }
-.order-status-pill.pending { background: #fffbeb; color: #d97706; border: 1px solid #fcd34d; }
-.order-status-pill.cancelled { background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; }
+.order-type-pill {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.order-type-pill.buy {
+  background: #f0fdf4;
+  color: #16a34a;
+  border: 1px solid #bbf7d0;
+}
+
+.order-type-pill.sell {
+  background: #fef2f2;
+  color: #dc2626;
+  border: 1px solid #fecaca;
+}
+
+.order-status-pill {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.order-status-pill.completed {
+  background: #f0fdf4;
+  color: #16a34a;
+  border: 1px solid #bbf7d0;
+}
+
+.order-status-pill.pending {
+  background: #fffbeb;
+  color: #d97706;
+  border: 1px solid #fcd34d;
+}
+
+.order-status-pill.cancelled {
+  background: #fef2f2;
+  color: #dc2626;
+  border: 1px solid #fecaca;
+}
 
 /* Transactions */
-.orders-transactions-section { margin-top: 32px; padding-top: 24px; border-top: 1px solid #e5e7eb; }
-.orders-transactions-section h3 { margin: 0 0 16px; font-size: 18px; font-weight: 600; color: #1a1a1a; }
-.orders-transactions-list { display: flex; flex-direction: column; gap: 12px; }
-.orders-transaction-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background: #f8f9fa; border-radius: 6px; border-left: 4px solid #ff6b35; }
-.orders-transaction-info { display: flex; flex-direction: column; gap: 4px; }
-.orders-transaction-type { font-weight: 600; font-size: 14px; color: #1a1a1a; }
-.orders-transaction-segment { font-size: 12px; color: #6b7280; text-transform: uppercase; }
-.orders-transaction-details { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
-.orders-transaction-amount { font-weight: 600; font-size: 14px; color: #16a34a; }
-.orders-transaction-description { font-size: 12px; color: #6b7280; }
-.orders-transaction-date { font-size: 11px; color: #9ca3af; }
+.orders-transactions-section {
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.orders-transactions-section h3 {
+  margin: 0 0 16px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.orders-transactions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.orders-transaction-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: #f8f9fa;
+  border-radius: 6px;
+  border-left: 4px solid #ff6b35;
+}
+
+.orders-transaction-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.orders-transaction-type {
+  font-weight: 600;
+  font-size: 14px;
+  color: #1a1a1a;
+}
+
+.orders-transaction-segment {
+  font-size: 12px;
+  color: #6b7280;
+  text-transform: uppercase;
+}
+
+.orders-transaction-details {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.orders-transaction-amount {
+  font-weight: 600;
+  font-size: 14px;
+  color: #16a34a;
+}
+
+.orders-transaction-description {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.orders-transaction-date {
+  font-size: 11px;
+  color: #9ca3af;
+}
 
 /* Mobile Responsive Styles for Orders (max-width: 765px) */
 @media (max-width: 765px) {
@@ -62,6 +234,10 @@
     flex-direction: column;
     gap: 16px;
     margin-bottom: 24px;
+  }
+
+  .upper-div {
+    width: 100%; /* Full width on mobile */
   }
 
   .orders-header h2 {

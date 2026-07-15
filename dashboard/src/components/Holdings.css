@@ -1,9 +1,14 @@
 /* Holdings.css */
+.upper-div {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
 
 /* Base Styles */
 .holdings-bg {
   background: #fff;
-  min-height: 100vh;
+  min-height: 100%;
   padding: 20px;
 }
 .holdings-container {
@@ -248,3 +253,4 @@
     font-size: 12px;
   }
 }
+

@@ -1,17 +1,16 @@
-// src/components/Watchlist/BuyStockWindow.jsx
 import React, { useState } from "react";
-import axios from "axios";
-import "./BuyStockWindow.css";
-import API_BASE_URL from "../config/api";
+import "./TradeWindow.css";
+import api from "../api/client";
 
 const BuyStockWindow = ({ stock, onClose, onBuy, funds }) => {
+
   const [quantity, setQuantity] = useState(1);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   const stockPrice = Number(stock.price ?? stock.ltp ?? 0);
   const maxQuantity = Math.min(
-    Math.floor(funds.currency / stockPrice) || 0,
+    Math.floor((funds.currency || 0) / stockPrice) || 0,
     10000
   );
 
@@ -31,7 +30,7 @@ const BuyStockWindow = ({ stock, onClose, onBuy, funds }) => {
   };
 
   const handleBuy = async () => {
-    if (quantity * stockPrice > funds.currency) {
+    if (quantity * stockPrice > (funds.currency || 0)) {
       setError("Insufficient funds");
       return;
     }
@@ -40,19 +39,19 @@ const BuyStockWindow = ({ stock, onClose, onBuy, funds }) => {
     setError("");
 
     try {
-      const res = await axios.post(
-        `${API_BASE_URL}/api/orders/buy`,
+      console.log("Buying stock:", { symbol: stock.symbol, quantity, price: stockPrice });
+      
+      const res = await api.post(
+        "/api/orders/buy",
         {
           symbol: stock.symbol,
           name: stock.name,
           price: stockPrice,
           quantity,
-        },
-        {
-          withCredentials: true,
-          headers: { "Content-Type": "application/json" },
         }
       );
+
+      console.log("Buy response:", res.data);
 
       if (res.data.success) {
         onBuy(stock, quantity, res.data.order);
@@ -62,38 +61,38 @@ const BuyStockWindow = ({ stock, onClose, onBuy, funds }) => {
         setError(res.data.message || "Failed to buy stock");
       }
     } catch (err) {
-      console.error("Buy error:", err);
-      setError("Failed to buy stock");
+      console.error("Buy error:", err.response?.data || err);
+      setError(err.response?.data?.message || "Failed to buy stock. Please try again.");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="buy-modal-overlay">
-      <div className="buy-modal">
-        <div className="buy-modal-header">
-          <h3>Buy {stock.symbol}</h3>
-          <button className="close-btn" onClick={onClose}>
+    <div className="trade-modal-overlay" role="presentation" onMouseDown={onClose}>
+      <div className="trade-modal trade-modal--buy" role="dialog" aria-modal="true" aria-labelledby="buy-stock-title" onMouseDown={(event) => event.stopPropagation()}>
+        <div className="trade-modal__header">
+          <h3 id="buy-stock-title">Buy {stock.symbol}</h3>
+          <button className="trade-modal__close" onClick={onClose} aria-label="Close buy dialog">
             ×
           </button>
-          <p className="stock-name">{stock.name}</p>
+          <p className="trade-modal__stock-name">{stock.name}</p>
         </div>
 
-        <div className="buy-modal-body">
-          <div className="price-row">
+        <div className="trade-modal__body">
+          <div className="trade-modal__price-row">
             <span>LTP</span>
             <span>₹{stockPrice.toFixed(2)}</span>
           </div>
 
-          <div className="quantity-section">
-            <div className="quantity-header">
+          <div className="trade-modal__quantity">
+            <div className="trade-modal__quantity-header">
               <label>Quantity</label>
               <span className="available-qty">Available: {maxQuantity}</span>
             </div>
 
-            <div className="quantity-controls">
-              <button className="qty-btn" onClick={decrementQuantity}>
+            <div className="trade-modal__quantity-controls">
+              <button className="trade-modal__qty-button" onClick={decrementQuantity} aria-label="Decrease quantity">
                 -
               </button>
               <input
@@ -102,31 +101,32 @@ const BuyStockWindow = ({ stock, onClose, onBuy, funds }) => {
                 onChange={handleQuantityChange}
                 min="1"
                 max={maxQuantity}
-                className="qty-input"
+                className="trade-modal__qty-input"
+                aria-label="Quantity"
               />
-              <button className="qty-btn" onClick={incrementQuantity}>
+              <button className="trade-modal__qty-button" onClick={incrementQuantity} aria-label="Increase quantity">
                 +
               </button>
             </div>
 
-            {error && <div className="error-message">{error}</div>}
+            {error && <div className="trade-modal__error" role="alert">{error}</div>}
           </div>
 
-          <div className="amount-summary">
-            <div className="summary-row">
+          <div className="trade-modal__summary">
+            <div className="trade-modal__summary-row">
               <span>Estimated amount</span>
               <span>₹{(quantity * stockPrice).toFixed(2)}</span>
             </div>
-            <div className="summary-row small">
+            <div className="trade-modal__summary-row trade-modal__summary-row--small">
               <span>Account Balance</span>
-              <span>₹{funds.currency.toLocaleString("en-IN")}</span>
+              <span>₹{(funds.currency || 0).toLocaleString("en-IN")}</span>
             </div>
           </div>
 
           <button
-            className="buy-btn"
+            className="trade-modal__submit trade-modal__submit--buy"
             onClick={handleBuy}
-            disabled={loading || quantity * stockPrice > funds.currency}
+            disabled={loading || quantity * stockPrice > (funds.currency || 0)}
           >
             {loading ? "Processing..." : "Buy"}
           </button>

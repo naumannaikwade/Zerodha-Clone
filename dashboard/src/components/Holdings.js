@@ -1,13 +1,11 @@
-// Holdings.js
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React from 'react';
+import usePortfolioStore from "../store/usePortfolioStore";
 import './Holdings.css';
-import API_BASE_URL from '../config/api';
 
 function Holdings() {
-  const [holdings, setHoldings] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+  const holdings = usePortfolioStore((state) => state.holdings);
+  const loading = usePortfolioStore((state) => state.loading.holdings);
+  const error = usePortfolioStore((state) => state.errors.holdings);
 
   const format = n => `₹${n?.toLocaleString('en-IN') || '0'}`;
   const formatPnl = n => (n >= 0 ? `+${format(n)}` : `-${format(Math.abs(n))}`);
@@ -15,29 +13,6 @@ function Holdings() {
     const num = typeof n === 'string' ? parseFloat(n) : n;
     return num >= 0 ? `+${num?.toFixed(2) || '0.00'}%` : `${num?.toFixed(2) || '0.00'}%`;
   };
-
-  useEffect(() => {
-    const fetchHoldings = async () => {
-      try {
-        setLoading(true);
-        const response = await axios.get(`${API_BASE_URL}/api/holdings`, { 
-  withCredentials: true 
-});
-        if (response.data && Array.isArray(response.data)) {
-          setHoldings(response.data);
-        } else setHoldings([]);
-      } catch (err) {
-        setError('Failed to load holdings. Using mock data.');
-        setHoldings([
-          { _id: 1, symbol: 'TCS', name: 'Tata Consultancy Services', quantity: 15, avgPrice: 3200, ltp: 3500, pnl: 4500, pnlPercent: 9.38, investment: 48000, currentValue: 52500 },
-          { _id: 2, symbol: 'RELIANCE', name: 'Reliance Industries', quantity: 8, avgPrice: 2600, ltp: 2800, pnl: 1600, pnlPercent: 7.69, investment: 20800, currentValue: 22400 }
-        ]);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchHoldings();
-  }, []);
 
   const totalQty = holdings.reduce((sum, h) => sum + (h.quantity || 0), 0);
   const totalInvestment = holdings.reduce((sum, h) => sum + (h.investment || 0), 0);
@@ -60,7 +35,7 @@ function Holdings() {
       <div className="holdings-container">
         <div className="holdings-card">
           <div className="holdings-header">
-            <div>
+            <div className='upper-div'>
               <h2>Holdings</h2>
               <p className="holdings-tagline">View your current portfolio holdings and P&L</p>
               <div className="holdings-summary-info">

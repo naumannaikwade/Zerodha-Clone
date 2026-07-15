@@ -1,48 +1,19 @@
-// Orders.js
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React from 'react';
+import usePortfolioStore from "../store/usePortfolioStore";
 import './Orders.css';
-import API_BASE_URL from '../config/api';
 
 function Orders() {
-  const [orders, setOrders] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+  const orders = usePortfolioStore((state) => state.orders);
+  const loading = usePortfolioStore((state) => state.loading.orders);
+  const error = usePortfolioStore((state) => state.errors.orders);
 
   // Format currency
   const format = n => `₹${n?.toLocaleString('en-IN') || '0'}`;
 
-  // Fetch orders from backend
-  useEffect(() => {
-    const fetchOrders = async () => {
-      try {
-        setLoading(true);
-        const response = await axios.get(`${API_BASE_URL}/api/orders`, {
-  withCredentials: true
-});
-        if (response.data && Array.isArray(response.data)) {
-          setOrders(response.data);
-        } else {
-          setOrders([]);
-          setError('No orders data received from server');
-        }
-      } catch (err) {
-        setError('Failed to load orders. Using mock data.');
-        setOrders([
-          { _id: 1, type: 'BUY', symbol: 'TCS', quantity: 10, price: 3500, total: 35000, status: 'Completed', createdAt: '2023-05-15T10:30:00' },
-          { _id: 2, type: 'SELL', symbol: 'RELIANCE', quantity: 5, price: 2800, total: 14000, status: 'Pending', createdAt: '2023-05-16T11:45:00' }
-        ]);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchOrders();
-  }, []);
-
   // Totals
   const totalQty = orders.reduce((sum, o) => sum + (o.quantity || 0), 0);
   const totalValue = orders.reduce((sum, o) => sum + (o.total || 0), 0);
-  const completedOrders = orders.filter(o => o.status === 'Completed').length;
+  const completedOrders = orders.filter(o => o.status?.toUpperCase() === 'COMPLETED').length;
 
   if (loading) {
     return (
@@ -61,7 +32,7 @@ function Orders() {
       <div className="orders-container">
         <div className="orders-card">
           <div className="orders-header">
-            <div>
+            <div className='upper-div'>
               <h2>Orders</h2>
               <p className="orders-tagline">View your recent buy and sell orders</p>
               <div className="orders-summary-info">

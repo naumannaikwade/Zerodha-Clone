@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React from 'react';
+import usePortfolioStore from "../store/usePortfolioStore";
 import './Positions.css';
-import API_BASE_URL from '../config/api';
 
 function Positions() {
-  const [positions, setPositions] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+  const positions = usePortfolioStore((state) => state.positions);
+  const loading = usePortfolioStore((state) => state.loading.positions);
+  const error = usePortfolioStore((state) => state.errors.positions);
 
   // Format currency
   const format = n => `₹${n?.toLocaleString('en-IN') || '0'}`;
@@ -20,54 +19,9 @@ function Positions() {
     return num >= 0 ? `+${num?.toFixed(2) || '0.00'}%` : `${num?.toFixed(2) || '0.00'}%`;
   };
 
-  // Fetch positions from backend
-  useEffect(() => {
-    const fetchPositions = async () => {
-      try {
-        setLoading(true);
-        console.log("Fetching positions from API...");
-        
-        const response = await axios.get(`${API_BASE_URL}/api/positions`, {
-  withCredentials: true
-});
-        
-        console.log("API response:", response.data);
-        
-        if (response.data && Array.isArray(response.data)) {
-          setPositions(response.data);
-        } else {
-          setPositions([]);
-          setError('No positions data received from server');
-        }
-      } catch (err) {
-        console.error('Error fetching positions:', err);
-        setError('Failed to load positions. Please try again.');
-        // Fallback to mock data if API fails
-        setPositions([
-          { 
-            _id: 1, 
-            symbol: 'TCS', 
-            name: 'Tata Consultancy Services',
-            quantity: 5, 
-            buyPrice: 3400, 
-            currentPrice: 3500, 
-            pnl: 500,
-            type: 'Long',
-            segment: 'Equity'
-          }
-        ]);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchPositions();
-  }, []);
-
   // Calculate totals
   const totalQty = positions.reduce((sum, p) => sum + (p.quantity || 0), 0);
   const totalInvestment = positions.reduce((sum, p) => sum + ((p.buyPrice || 0) * (p.quantity || 0)), 0);
-  const totalCurrentValue = positions.reduce((sum, p) => sum + ((p.currentPrice || 0) * (p.quantity || 0)), 0);
   const totalPnl = positions.reduce((sum, p) => sum + (p.pnl || ((p.currentPrice - p.buyPrice) * p.quantity) || 0), 0);
   const totalPnlPercent = totalInvestment > 0 ? (totalPnl / totalInvestment * 100) : 0;
 
@@ -90,7 +44,7 @@ function Positions() {
       <div className="positions-container">
         <div className="positions-card">
           <div className="positions-header">
-            <div>
+            <div className='upper-div'>
               <h2>Positions</h2>
               <p className="positions-tagline">Track your open positions and mark-to-market P&L</p>
               <div className="positions-summary-info">
@@ -112,7 +66,6 @@ function Positions() {
               <p>No open positions found. Start trading to see your positions.</p>
             </div>
           ) : (
-            // ADD THIS WRAPPER DIV
             <div className="positions-table-wrapper">
               <table className="positions-table">
                 <thead>
@@ -182,7 +135,6 @@ function Positions() {
                 </tfoot>
               </table>
             </div>
-            // END OF WRAPPER DIV
           )}
         </div>
       </div>

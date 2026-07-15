@@ -46,7 +46,6 @@ const OrdersSchema = new mongoose.Schema({
     default: Date.now 
   }
 }, {
-  // Add this to ensure proper collection name
   collection: 'orders'
 });
 

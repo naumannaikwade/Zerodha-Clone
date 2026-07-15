@@ -6,10 +6,9 @@ import './Login.css';
 const Login = () => {
   const [form, setForm] = useState({ email: '', password: '' });
   const [showPassword, setShowPassword] = useState(false);
-  const [rememberMe, setRememberMe] = useState(false);
   const navigate = useNavigate();
 
-   const { login, loading, error, clearError, isAuthenticated } = useAuthStore();
+  const { login, loading, error, clearError, isAuthenticated } = useAuthStore();
 
   useEffect(() => {
     if (isAuthenticated) navigate("/home", { replace: true });
@@ -22,21 +21,12 @@ const Login = () => {
   };
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
-  const result = await login(form);
-  if (result.success) {
-    // ✅ Save userId so Funds.js can use it
-    localStorage.setItem("userId", result.user._id);
-
-    if (rememberMe) {
-      localStorage.setItem("rememberMe", "true");
-    } else {
-      localStorage.removeItem("rememberMe");
+    e.preventDefault();
+    const result = await login(form);
+    if (result.success) {
+      navigate("/home", { replace: true });
     }
-
-    navigate("/home", { replace: true });
-  }
-};
+  };
 
   return (
     <div className="login-container">
@@ -78,18 +68,6 @@ const Login = () => {
                 {showPassword ? "🙈" : "👁️"}
               </button>
             </div>
-          </div>
-
-          <div className="form-options">
-            <label className="remember-me">
-              <input
-                type="checkbox"
-                checked={rememberMe}
-                onChange={(e) => setRememberMe(e.target.checked)}
-              />
-              <span>Remember me</span>
-            </label>
-            <span className="forgot-password">Forgot password?</span>
           </div>
 
           <button type="submit" disabled={loading} className="login-button">

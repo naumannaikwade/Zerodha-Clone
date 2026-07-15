@@ -1,55 +1,59 @@
-import React from "react";
+import React, { useState } from "react";
+import "./Navbar.css";
 
 function Navbar() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+  };
+
   return (
-    <nav
-      class="navbar navbar-expand-lg border-bottom"
-      style={{ backgroundColor: "#FFF" }}
-    >
-      <div class="container p-2">
-        <a class="navbar-brand" href="/">
+    <nav className="navbar">
+      <div className="navbar-container">
+        <a className="navbar-brand" href="/" onClick={closeMenu}>
           <img
             src="media/images/logo.svg"
-            style={{ width: "25%" }}
             alt="Logo"
           />
         </a>
         <button
-          class="navbar-toggler"
+          className={`navbar-toggler ${isMenuOpen ? "active" : ""}`}
           type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
+          onClick={toggleMenu}
           aria-label="Toggle navigation"
         >
-          <span class="navbar-toggler-icon"></span>
+          <span className="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <form class="d-flex" role="search">
-            <ul class="navbar-nav mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/signup">
+        <div className={`navbar-collapse ${isMenuOpen ? "show" : ""}`} id="navbarSupportedContent">
+          <form className="navbar-form" role="search">
+            <ul className="navbar-nav">
+              <li className="nav-item">
+                <a className="nav-link active" aria-current="page" href="/signup" onClick={closeMenu}>
                   Signup
                 </a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link active" href="/about">
+              <li className="nav-item">
+                <a className="nav-link active" href="/about" onClick={closeMenu}>
                   About
                 </a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link active" href="/product">
+              <li className="nav-item">
+                <a className="nav-link active" href="/product" onClick={closeMenu}>
                   Product
                 </a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link active" href="/pricing">
+              <li className="nav-item">
+                <a className="nav-link active" href="/pricing" onClick={closeMenu}>
                   Pricing
                 </a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link active" href="/support">
+              <li className="nav-item">
+                <a className="nav-link active" href="/support" onClick={closeMenu}>
                   Support
                 </a>
               </li>

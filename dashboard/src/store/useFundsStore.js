@@ -1,70 +1,70 @@
-// store/useFundsStore.js
 import { create } from "zustand";
-import axios from "axios";
-import API_BASE_URL from '../config/api';
+import api from "../api/client";
 
-const API_URL = `${API_BASE_URL}/api/funds`; // backend URL
+const emptyFunds = { equity: 0, commodity: 0, currency: 0 };
 
 const useFundsStore = create((set, get) => ({
-  funds: { equity: 0, commodity: 0, currency: 0 },
+  funds: emptyFunds,
   transactions: [],
   loading: false,
   error: null,
 
-  // ✅ Fetch funds from backend
   fetchFunds: async () => {
+    if (!localStorage.getItem("token")) return;
     set({ loading: true, error: null });
     try {
-      const res = await axios.get(API_URL, { withCredentials: true });
-      set({ funds: res.data, transactions: res.data.transactions || [], loading: false });
-    } catch (err) {
+      const response = await api.get("/api/funds");
       set({
-        error: err.response?.data?.message || "Failed to fetch funds",
-        loading: false,
+        funds: response.data,
+        transactions: response.data.transactions || [],
       });
+    } catch (error) {
+      set({ error: error.response?.data?.message || "Failed to fetch funds" });
+    } finally {
+      set({ loading: false });
     }
   },
 
-  // ✅ Add demo funds
   addDemoFunds: async () => {
     set({ loading: true, error: null });
     try {
-      const res = await axios.post(`${API_URL}/add-demo`, {}, { withCredentials: true });
-      set({ funds: res.data.funds, transactions: res.data.funds.transactions, loading: false });
-      return { success: true, message: "Demo funds added successfully" };
-    } catch (err) {
+      const response = await api.post("/api/funds/add-demo");
+      if (!response.data.success) {
+        const message = response.data.error || "Failed to add demo funds";
+        set({ error: message });
+        return { success: false, error: message };
+      }
       set({
-        error: err.response?.data?.message || "Failed to add demo funds",
-        loading: false,
+        funds: response.data.funds,
+        transactions: response.data.funds.transactions || [],
       });
-      return { success: false, error: err.response?.data?.message || "Failed to add demo funds" };
+      return {
+        success: true,
+        message: response.data.message || "Demo funds added successfully",
+      };
+    } catch (error) {
+      const message = error.response?.data?.message || "Failed to add demo funds";
+      set({ error: message });
+      return { success: false, error: message };
+    } finally {
+      set({ loading: false });
     }
   },
 
-  // ✅ Update funds dynamically
-  setFunds: (newFunds) => set({ funds: newFunds, transactions: newFunds.transactions || [] }),
-
-  // ✅ Clear error
   clearError: () => set({ error: null }),
-
-  // ✅ Helper functions
+  reset: () => set({ funds: emptyFunds, transactions: [], error: null }),
   getTotalBalance: () => {
-    const f = get().funds;
-    return (f.equity || 0) + (f.commodity || 0) + (f.currency || 0);
+    const { funds } = get();
+    return (funds.equity || 0) + (funds.commodity || 0) + (funds.currency || 0);
   },
   getTotalMarginUsed: () => {
-    const f = get().funds;
-    return (
-      Math.floor((f.equity || 0) * 0.2) +
-      Math.floor((f.commodity || 0) * 0.2) +
-      Math.floor((f.currency || 0) * 0.2)
+    const { funds } = get();
+    return [funds.equity, funds.commodity, funds.currency].reduce(
+      (total, value) => total + Math.floor((value || 0) * 0.2),
+      0
     );
   },
-  getTotalAvailable: () => {
-    const f = get().funds;
-    const marginUsed = get().getTotalMarginUsed();
-    return get().getTotalBalance() - marginUsed;
-  },
+  getTotalAvailable: () => get().getTotalBalance() - get().getTotalMarginUsed(),
 }));
 
 export default useFundsStore;

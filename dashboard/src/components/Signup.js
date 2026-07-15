@@ -16,7 +16,7 @@ const Signup = () => {
   const [success, setSuccess] = useState("");
   const navigate = useNavigate();
 
-  const { signup, login, loading, error, clearError } = useAuthStore(); // ✅ removed autoLogin
+  const { signup, loading, error, clearError } = useAuthStore();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -67,37 +67,18 @@ const Signup = () => {
 
     if (!validateForm()) return;
 
-    // try signup
-    const signupResult = await signup({
+    const result = await signup({
       username: form.username,
       email: form.email,
       password: form.password,
     });
 
-    if (!signupResult.success) {
-      if (
-        signupResult.error &&
-        signupResult.error.includes("Email already in use")
-      ) {
-        setSuccess("Account already exists! Redirecting to login...");
-        setTimeout(() => navigate("/login"), 1500);
-      }
-      return;
-    }
-
-    // ✅ FIXED: after signup → auto login with session
-    setSuccess("Account created! Logging you in...");
-    const loginResult = await login({
-      email: form.email,
-      password: form.password,
-    });
-
-    if (loginResult.success) {
-      setSuccess("Welcome to TradeX! Redirecting...");
-      setTimeout(() => navigate("/home"), 1500); // ✅ session-based auth
-    } else {
-      setSuccess("Account created! Please log in manually.");
-      setTimeout(() => navigate("/login"), 2000);
+    if (result.success) {
+      setSuccess("Account created successfully! Redirecting...");
+      setTimeout(() => navigate("/home"), 1500);
+    } else if (result.error && result.error.includes("Email already in use")) {
+      setSuccess("Account already exists! Redirecting to login...");
+      setTimeout(() => navigate("/login"), 1500);
     }
   };
 

@@ -1,13 +1,13 @@
 const axios = require("axios");
-const Stock = require("../models/StocksModel.js");
-const { stockSymbols } = require("./stockSymbols.js");
+const Stock = require("../models/Stock");
+const { STOCK_SYMBOLS, COMPANY_NAMES } = require("../config/constants");
 
 const API_KEY = process.env.FINNHUB_API_KEY || "demo";
 
 const fetchAndUpdateStocks = async () => {
   console.log("⏳ Fetching latest stock data...");
 
-  for (const symbol of stockSymbols) {
+  for (const symbol of STOCK_SYMBOLS) {
     try {
       const res = await axios.get(
         `https://finnhub.io/api/v1/quote?symbol=${symbol}&token=${API_KEY}`
@@ -19,15 +19,14 @@ const fetchAndUpdateStocks = async () => {
         continue;
       }
 
-     const stockData = {
-  symbol,
-  name: symbol,
-  ltp: data.c, // <-- updated field
-  change: data.c - data.pc,
-  changePercent: ((data.c - data.pc) / data.pc) * 100,
-  lastUpdated: new Date(),
-};
-
+      const stockData = {
+        symbol,
+        name: COMPANY_NAMES[symbol] || symbol,
+        ltp: data.c,
+        change: data.c - data.pc,
+        changePercent: ((data.c - data.pc) / data.pc) * 100,
+        lastUpdated: new Date(),
+      };
 
       await Stock.findOneAndUpdate({ symbol }, stockData, {
         upsert: true,

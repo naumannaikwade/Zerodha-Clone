@@ -1,13 +1,12 @@
 /* Global Layout */
 .dashboard-bg {
-  background-color: #fff;
-  /* min-height: 100vh; */
+  background-color: transparent;
   padding: 20px 30px;
   font-family: "Inter", "Poppins", sans-serif;
 }
 
 .dashboard-container {
-  /* max-width: 1200px; */
+  max-width: 1200px;
   margin: auto;
 }
 
@@ -37,22 +36,30 @@
   flex-direction: column; /* stack all cards vertically */
   gap: 24px;
   width: 100%;
+  
 }
 
 /* Cards */
 .dashboard-card {
   background: #ffffff;
   border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
   transition: all 0.3s ease;
-  width: 100%; /* take full available width */
-  margin-bottom: 20px;
+  width: 100%;
+  margin: 0 0 20px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06);
 }
 
 .dashboard-card:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
 }
+
+/* .dashboard-left{
+  box-shadow: 0 0 15px rgba(128, 128, 128, 0.274);
+  margin: 10px;
+  border-radius: 10px;
+} */
 
 /* Card Header */
 .card-header {
@@ -218,14 +225,6 @@
   align-items: center;
   height: 200px;
   color: #6b7280;
-}
-
-/* Positive / Negative */
-.positive {
-  color: #16a34a !important;
-}
-.negative {
-  color: #dc2626 !important;
 }
 
 /* Mobile Responsive Styles for Dashboard (max-width: 765px) */

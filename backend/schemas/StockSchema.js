@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const StocksSchema = new mongoose.Schema({
+const StockSchema = new mongoose.Schema({
   symbol: { type: String, unique: true, required: true },
   name: { type: String, default: "" },
   ltp: { type: Number, required: true },           // latest trading price
@@ -9,4 +9,4 @@ const StocksSchema = new mongoose.Schema({
   lastUpdated: { type: Date, default: Date.now }
 });
 
-module.exports = StocksSchema;
+module.exports = StockSchema;

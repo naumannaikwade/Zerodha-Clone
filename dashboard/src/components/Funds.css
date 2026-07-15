@@ -1,6 +1,6 @@
 .funds-bg {
   background-color: #ffffff;
-  min-height: 100vh;
+  min-height: 100%;
   padding: 20px;
 }
 
@@ -97,35 +97,6 @@
 .buy-stock-btn:disabled {
   background: #9ca3af;
   cursor: not-allowed;
-}
-
-/* Form Styles */
-.form-group {
-  margin-bottom: 16px;
-}
-
-.form-group label {
-  display: block;
-  margin-bottom: 6px;
-  font-weight: 600;
-  font-size: 14px;
-  color: #374151;
-}
-
-.form-group input {
-  width: 100%;
-  padding: 10px 12px;
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
-  font-size: 14px;
-  transition: all 0.2s ease;
-  box-sizing: border-box;
-}
-
-.form-group input:focus {
-  outline: none;
-  border-color: #ff6b35;
-  box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
 }
 
 .total-cost {
